@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biodynamic Massage Techniques Index</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 3px solid #e94560;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(233, 69, 96, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(15, 52, 96, 0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            color: #fff;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 span {
+            color: #e94560;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #a0a0b0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .subtitle {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            color: #7a7a8a;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e94560;
+        }
+
+        .stat .label {
+            font-size: 0.85rem;
+            color: #8a8a9a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Search & Filter */
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            background: #1a1a2e;
+            border: 1px solid #2a2a3e;
+            border-radius: 10px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #e94560;
+        }
+
+        .search-box::before {
+            content: '\1F50D';
+            position: absolute;
+            left: auto;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: #1a1a2e;
+            border: 1px solid #2a2a3e;
+            border-radius: 10px;
+            color: #a0a0b0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #e94560;
+            border-color: #e94560;
+            color: #fff;
+        }
+
+        /* Sections */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1a1a2e;
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            color: #fff;
+        }
+
+        .section-header .badge {
+            background: #e94560;
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #12121e;
+            border: 1px solid #1e1e30;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: #e94560;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(233, 69, 96, 0.1);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .card-number {
+            font-size: 0.85rem;
+            color: #e94560;
+            font-weight: 600;
+            background: rgba(233, 69, 96, 0.1);
+            padding: 2px 10px;
+            border-radius: 6px;
+        }
+
+        .card-rating {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star {
+            color: #e94560;
+            font-size: 0.9rem;
+        }
+
+        .star.empty {
+            color: #2a2a3e;
+        }
+
+        .card h3 {
+            font-size: 1.05rem;
+            color: #fff;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .card-author {
+            font-size: 0.85rem;
+            color: #7a7a8a;
+            margin-bottom: 12px;
+        }
+
+        .card-page {
+            font-size: 0.8rem;
+            color: #5a5a6a;
+            margin-bottom: 12px;
+        }
+
+        .card-page span {
+            color: #e94560;
+            font-weight: 600;
+        }
+
+        .techniques-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tech-tag {
+            background: rgba(233, 69, 96, 0.1);
+            color: #e0a0a0;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            border: 1px solid rgba(233, 69, 96, 0.15);
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: #8a8a9a;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        /* Techniques Summary */
+        .tech-summary {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #1a1a2e;
+        }
+
+        .tech-summary h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #12121e;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .tech-table th {
+            background: #1a1a2e;
+            padding: 14px 20px;
+            text-align: right;
+            color: #e94560;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .tech-table td {
+            padding: 12px 20px;
+            border-bottom: 1px solid #1a1a2e;
+            font-size: 0.9rem;
+        }
+
+        .tech-table tr:hover td {
+            background: rgba(233, 69, 96, 0.03);
+        }
+
+        .tech-table .tech-name {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .hidden { display: none !important; }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #5a5a6a;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #3a3a4a;
+            font-size: 0.8rem;
+            border-top: 1px solid #1a1a2e;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .stats-bar { gap: 20px; }
+            .controls { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>Biodynamic Massage <span>Techniques Index</span></h1>
+    <p>The 'New' Collected Papers of Biodynamic Psychology, Massage & Psychotherapy: 2022</p>
+    <p class="subtitle">Edited by Courtenay Young &middot; In Celebration of Gerda Boyesen's 100th Anniversary</p>
+    <div class="stats-bar">
+        <div class="stat"><div class="number">34</div><div class="label">Articles on Techniques</div></div>
+        <div class="stat"><div class="number">11</div><div class="label">Named Techniques</div></div>
+        <div class="stat"><div class="number">1552</div><div class="label">Total Pages</div></div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search articles, authors, techniques...">
+        </div>
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="3">HIGH</button>
+        <button class="filter-btn" data-filter="2">MODERATE-HIGH</button>
+        <button class="filter-btn" data-filter="1">MODERATE</button>
+    </div>
+
+    <div id="noResults" class="no-results hidden">No articles match your search.</div>
+
+    <!-- HIGH -->
+    <div class="section-header" data-section="3">
+        <h2>Detailed Technique Guides</h2>
+        <span class="badge">HIGH</span>
+    </div>
+    <div class="cards-grid" id="highCards">
+
+        <div class="card" data-rating="3" data-search="1.13 energy distribution treatment clover southwell 139">
+            <div class="card-top">
+                <span class="card-number">1.13</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+            </div>
+            <h3>The Energy Distribution Treatment</h3>
+            <div class="card-author">Clover Southwell</div>
+            <div class="card-page">Page <span>139</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+            </div>
+            <div class="card-desc">The definitive practical guide: 3-stroke sequence (bone, muscle, skin), clearing, draining, sealing, aura work. Written as a trainee aide memoire.</div>
+        </div>
+
+        <div class="card" data-rating="3" data-search="3.3.2 biodynamic massage therapeutic tool clover southwell 346 energy distribution sedative aura armour">
+            <div class="card-top">
+                <span class="card-number">3.3.2</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+            </div>
+            <h3>Biodynamic Massage as a Therapeutic Tool</h3>
+            <div class="card-author">Clover Southwell</div>
+            <div class="card-page">Page <span>346</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Sedative Massage</span>
+                <span class="tech-tag">Aura Work</span>
+                <span class="tech-tag">Armour Dissolution</span>
+            </div>
+            <div class="card-desc">Systematic framework for choosing techniques based on client state: vertical vs. horizontal equilibrium. Teaching aid for students.</div>
+        </div>
+
+        <div class="card" data-rating="3" data-search="4.6 pulsatory touch technique peg nunneley 559">
+            <div class="card-top">
+                <span class="card-number">4.6</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+            </div>
+            <h3>Pulsatory Touch Technique</h3>
+            <div class="card-author">Peg Nunneley</div>
+            <div class="card-page">Page <span>559</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Pulsatory Touch</span>
+            </div>
+            <div class="card-desc">Step-by-step: head-to-feet sequence with exact breath cycle counts per body part. Hand cupping, rhythmic pressure, distributive strokes.</div>
+        </div>
+
+        <div class="card" data-rating="3" data-search="6.10 massage shock trauma kathrin stauffer 929 emptying packing resistance">
+            <div class="card-top">
+                <span class="card-number">6.10</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+            </div>
+            <h3>Massage for Shock & Trauma</h3>
+            <div class="card-author">Kathrin Stauffer</div>
+            <div class="card-page">Page <span>929</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Emptying</span>
+                <span class="tech-tag">Packing</span>
+                <span class="tech-tag">Resistance Work</span>
+            </div>
+            <div class="card-desc">Technique selection for trauma: grading for under-bound vs. over-bound clients, positioning advice (side-lying, clothed).</div>
+        </div>
+
+        <div class="card" data-rating="3" data-search="6.12 connective tissue spirit structure lorna mcneur 938 basic touch emptying hypotonus periosteum energy distribution stretching holding lifting">
+            <div class="card-top">
+                <span class="card-number">6.12</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+            </div>
+            <h3>Connective Tissue, Spirit & Structure</h3>
+            <div class="card-author">Lorna McNeur</div>
+            <div class="card-page">Page <span>938</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Basic Touch</span>
+                <span class="tech-tag">Emptying</span>
+                <span class="tech-tag">Hypotonus</span>
+                <span class="tech-tag">Periosteum</span>
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Stretching</span>
+                <span class="tech-tag">Holding</span>
+                <span class="tech-tag">Lifting</span>
+            </div>
+            <div class="card-desc">Most technique-dense article in Section 6. Joint work with fingertips, energy distribution for congestion.</div>
+        </div>
+
+        <div class="card" data-rating="3" data-search="7.1 reichian world gerda boyesen jellyfish exercises michael heller 1027 deep draining">
+            <div class="card-top">
+                <span class="card-number">7.1</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+            </div>
+            <h3>The Reichian World & Jellyfish Exercises</h3>
+            <div class="card-author">Michael Heller</div>
+            <div class="card-page">Page <span>1027</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Jellyfish Exercises</span>
+                <span class="tech-tag">Deep Draining</span>
+            </div>
+            <div class="card-desc">Jellyfish diaphragm pulsation exercises. Deep Draining cross-fibre shock impulse timed to in-breath.</div>
+        </div>
+
+        <div class="card" data-rating="3" data-search="8.4 biodynamic massage body therapy monika schaible 1068 energy distribution deep draining basic touch emptying">
+            <div class="card-top">
+                <span class="card-number">8.4</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+            </div>
+            <h3>Biodynamic Massage as Body Therapy</h3>
+            <div class="card-author">Monika Schaible</div>
+            <div class="card-page">Page <span>1068</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Deep Draining</span>
+                <span class="tech-tag">Basic Touch</span>
+                <span class="tech-tag">Emptying</span>
+            </div>
+            <div class="card-desc">Energy Distribution through 3 circulation systems (bones, muscles, connective tissue, aura). Deep Draining with indications & contraindications.</div>
+        </div>
+
+        <div class="card" data-rating="3" data-search="8.5 gerda boyesen method biodynamic therapy clover southwell 1080 deep massage energy distribution vegeto-therapy emptying">
+            <div class="card-top">
+                <span class="card-number">8.5</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+            </div>
+            <h3>The Gerda Boyesen Method</h3>
+            <div class="card-author">Clover Southwell</div>
+            <div class="card-page">Page <span>1080</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Deep Systematic Massage</span>
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Vegeto-therapy</span>
+                <span class="tech-tag">Emptying</span>
+            </div>
+            <div class="card-desc">Comprehensive method overview with clinical case examples. Week-by-week deep massage to melt muscular armour.</div>
+        </div>
+
+        <div class="card" data-rating="3" data-search="8.22 physiological working-out principle gerda boyesen 1258 working-out stethoscope">
+            <div class="card-top">
+                <span class="card-number">8.22</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+            </div>
+            <h3>The Physiological Working-Out Principle</h3>
+            <div class="card-author">Gerda Boyesen</div>
+            <div class="card-page">Page <span>1258</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Working-Out Principle</span>
+                <span class="tech-tag">Stethoscope</span>
+            </div>
+            <div class="card-desc">Core technique: working only on painful, tender, fluid-filled muscles while tracking stomach rumblings with stethoscope.</div>
+        </div>
+
+        <div class="card" data-rating="3" data-search="8.24 schematic process typical session vegeto-therapy clover southwell 1271">
+            <div class="card-top">
+                <span class="card-number">8.24</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+            </div>
+            <h3>Schematic Process of a Vegeto-therapy Session</h3>
+            <div class="card-author">Clover Southwell</div>
+            <div class="card-page">Page <span>1271</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Vegeto-therapy</span>
+            </div>
+            <div class="card-desc">Complete 7-stage session manual: emergence, impulses, emotional form, regression, healing flow, self-realisation, integration.</div>
+        </div>
+
+    </div>
+
+    <!-- MODERATE-HIGH -->
+    <div class="section-header" data-section="2">
+        <h2>Techniques in Clinical Context</h2>
+        <span class="badge">MODERATE-HIGH</span>
+    </div>
+    <div class="cards-grid" id="modHighCards">
+
+        <div class="card" data-rating="2" data-search="4.2 broken coccyx kundalini psycho-peristalsis peg nunneley 490 energy distribution periosteal">
+            <div class="card-top">
+                <span class="card-number">4.2</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>The Broken Coccyx & Psycho-peristalsis</h3>
+            <div class="card-author">Peg Nunneley</div>
+            <div class="card-page">Page <span>490</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Periosteal Work</span>
+            </div>
+            <div class="card-desc">Session-by-session Energy Distribution case study. Periosteal exploration at coccyx tip, tissue lifting from ribcage.</div>
+        </div>
+
+        <div class="card" data-rating="2" data-search="4.4 biodynamic treatment migraine peg nunneley 527 energy distribution emptying exiting life energy">
+            <div class="card-top">
+                <span class="card-number">4.4</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Biodynamic Treatment of Migraine</h3>
+            <div class="card-author">Peg Nunneley</div>
+            <div class="card-page">Page <span>527</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Emptying</span>
+                <span class="tech-tag">Exiting of Life Energy</span>
+            </div>
+            <div class="card-desc">Explicitly names 3 indicated techniques. "Energy Distribution is the treatment of considered choice for psychosomatic disorders."</div>
+        </div>
+
+        <div class="card" data-rating="2" data-search="5.2.8 diaphragm gateway unconscious van heel van eeghen 727 deep draining vegeto-therapy aura 12 techniques">
+            <div class="card-top">
+                <span class="card-number">5.2.8</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>The Diaphragm as Gateway to the Unconscious</h3>
+            <div class="card-author">van Heel & van Eeghen</div>
+            <div class="card-page">Page <span>727</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Deep Draining</span>
+                <span class="tech-tag">Vegeto-therapy</span>
+                <span class="tech-tag">Aura Work</span>
+            </div>
+            <div class="card-desc">References "around 12 Biodynamic Massage techniques." Rich physiological grounding with diaphragm anatomy appendices.</div>
+        </div>
+
+        <div class="card" data-rating="2" data-search="6.9 biodynamic massage psychotherapy interface gill westland 920 energy distribution basic touch emptying packing holding auric">
+            <div class="card-top">
+                <span class="card-number">6.9</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Biodynamic Massage & Psychotherapy Interface</h3>
+            <div class="card-author">Gill Westland</div>
+            <div class="card-page">Page <span>920</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Basic Touch</span>
+                <span class="tech-tag">Emptying</span>
+                <span class="tech-tag">Packing</span>
+                <span class="tech-tag">Holding</span>
+                <span class="tech-tag">Auric Work</span>
+            </div>
+            <div class="card-desc">Cancer/palliative care case study with specific technique choices for mastectomy client.</div>
+        </div>
+
+        <div class="card" data-rating="2" data-search="8.6d transformative moments part 4 elya steinberg 1117 14 touch methods basic touch lifting stretching energy distribution">
+            <div class="card-top">
+                <span class="card-number">8.6d</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Transformative Moments Part 4</h3>
+            <div class="card-author">Elya Steinberg</div>
+            <div class="card-page">Page <span>1117</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">14 Touch Methods</span>
+                <span class="tech-tag">Basic Touch</span>
+                <span class="tech-tag">Lifting & Stretching</span>
+                <span class="tech-tag">Energy Distribution</span>
+            </div>
+            <div class="card-desc">Names 14 different methods of touch. Techniques performed at different body levels: bones, periosteum, muscles, fascia, subcutaneous, energy.</div>
+        </div>
+
+        <div class="card" data-rating="2" data-search="8.10 biodynamic massage psychotherapy re-integrating roz carroll 1145 energy distribution emptying definition work tissue-level">
+            <div class="card-top">
+                <span class="card-number">8.10</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Biodynamic Massage in Psychotherapy</h3>
+            <div class="card-author">Roz Carroll</div>
+            <div class="card-page">Page <span>1145</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Emptying</span>
+                <span class="tech-tag">Definition Work</span>
+                <span class="tech-tag">Tissue-level Massage</span>
+            </div>
+            <div class="card-desc">Historical overview from Bulow-Hansen through Boyesen. Tailoring massage to peristaltic sounds. Detailed clinical case studies.</div>
+        </div>
+
+    </div>
+
+    <!-- MODERATE -->
+    <div class="section-header" data-section="1">
+        <h2>Techniques Mentioned with Context</h2>
+        <span class="badge">MODERATE</span>
+    </div>
+    <div class="cards-grid" id="modCards">
+
+        <div class="card" data-rating="1" data-search="1.12 essence energy distribution ebba boyesen 136">
+            <div class="card-top">
+                <span class="card-number">1.12</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>The Essence of Energy Distribution</h3>
+            <div class="card-author">Ebba Boyesen</div>
+            <div class="card-page">Page <span>136</span></div>
+            <div class="techniques-list"><span class="tech-tag">Energy Distribution</span></div>
+            <div class="card-desc">3 stages conceptually described: bone level, coaxing energy outward, lifting through skin/aura.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="1.14 scope energy distribution robyn lee speyer 151">
+            <div class="card-top">
+                <span class="card-number">1.14</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>The Scope of Energy Distribution</h3>
+            <div class="card-author">Robyn Lee (Speyer)</div>
+            <div class="card-page">Page <span>151</span></div>
+            <div class="techniques-list"><span class="tech-tag">Energy Distribution</span></div>
+            <div class="card-desc">Applications and principles. Galvanic and Faradic principles. Drawing energy through rather than working mechanically.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="2.3 bio-release part 1 mona-lisa boyesen 179">
+            <div class="card-top">
+                <span class="card-number">2.3</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Bio-Release, Part 1</h3>
+            <div class="card-author">Mona-Lisa Boyesen</div>
+            <div class="card-page">Page <span>179</span></div>
+            <div class="techniques-list"><span class="tech-tag">Bio-Release</span></div>
+            <div class="card-desc">Short-form biodynamic treatment. 5 biodynamic principles, vegetative massage, relaxation techniques, breathing exercises.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="4.3 parkinson syndrome peg nunneley 515 energy distribution tissue mobilization">
+            <div class="card-top">
+                <span class="card-number">4.3</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Treatment of Parkinson's Syndrome</h3>
+            <div class="card-author">Peg Nunneley</div>
+            <div class="card-page">Page <span>515</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Tissue Mobilization</span>
+            </div>
+            <div class="card-desc">Firm tissue mobilization from fingers upward, Energy Distribution strokes from shoulder to toes.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="4.5 biodynamic therapies depressive states peg nunneley 542 energy distribution emptying petrissage">
+            <div class="card-top">
+                <span class="card-number">4.5</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Biodynamic Therapies in Depressive States</h3>
+            <div class="card-author">Peg Nunneley</div>
+            <div class="card-page">Page <span>542</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Emptying</span>
+                <span class="tech-tag">Petrissage</span>
+            </div>
+            <div class="card-desc">Gentle Energy Distribution with stethoscope monitoring. Three ED strokes downwards with petrissage for balance.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="6.1 history biodynamic massage bernd eiden 861 energy distribution deep draining emptying connective tissue">
+            <div class="card-top">
+                <span class="card-number">6.1</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>The History of Biodynamic Massage</h3>
+            <div class="card-author">Bernd Eiden</div>
+            <div class="card-page">Page <span>861</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Deep Draining</span>
+                <span class="tech-tag">Emptying</span>
+                <span class="tech-tag">Connective Tissue</span>
+            </div>
+            <div class="card-desc">Historical overview of how techniques developed. Names and purposes discussed, not step-by-step.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="6.4 psychotherapeutic force biodynamic massage part 1 clover southwell 879 deep draining harmonising provocation">
+            <div class="card-top">
+                <span class="card-number">6.4</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Psychotherapeutic Force of Biodynamic Massage (Part 1)</h3>
+            <div class="card-author">Clover Southwell</div>
+            <div class="card-page">Page <span>879</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Deep Draining</span>
+                <span class="tech-tag">Harmonising</span>
+                <span class="tech-tag">Provocation</span>
+            </div>
+            <div class="card-desc">When to use harmonising vs. deep draining vs. distributing. Therapeutic rationale for technique selection.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="6.6 hamlet somatic metaphor roz carroll 892 deep draining emptying stretching lifting provocation">
+            <div class="card-top">
+                <span class="card-number">6.6</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>"And Let Me Wring Your Heart": Hamlet & the Somatic Metaphor</h3>
+            <div class="card-author">Roz Carroll</div>
+            <div class="card-page">Page <span>892</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Deep Draining</span>
+                <span class="tech-tag">Emptying</span>
+                <span class="tech-tag">Stretching</span>
+                <span class="tech-tag">Lifting</span>
+                <span class="tech-tag">Provocation</span>
+            </div>
+            <div class="card-desc">Creative workshop: applying technique rationale to fictional characters. Lists many technique names with brief rationale.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="6.22 biodynamic massage past present future susan frazer 1002 deep draining shock impulses">
+            <div class="card-top">
+                <span class="card-number">6.22</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Biodynamic Massage &mdash; Past, Present & Future</h3>
+            <div class="card-author">Susan Frazer</div>
+            <div class="card-page">Page <span>1002</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Deep Draining (hard/medium/soft)</span>
+            </div>
+            <div class="card-desc">Panel discussion. How techniques were taught at the Boyesen Centre. Shock impulses to hypertonic muscles.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="8.8 meeting psyche body clover southwell 1132 polarization armour trapezius">
+            <div class="card-top">
+                <span class="card-number">8.8</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Meeting the Psyche in the Body</h3>
+            <div class="card-author">Clover Southwell</div>
+            <div class="card-page">Page <span>1132</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Polarization</span>
+                <span class="tech-tag">Armour Softening</span>
+            </div>
+            <div class="card-desc">Softening armoured trapezius, polarization to encourage psycho-peristalsis. Photos show massage positions.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="8.13 how i developed biodynamic psychology gerda boyesen 1177 stethoscope dynamic relaxation psycho-peristalsis">
+            <div class="card-top">
+                <span class="card-number">8.13</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>How I Developed Biodynamic Psychology</h3>
+            <div class="card-author">Gerda Boyesen</div>
+            <div class="card-page">Page <span>1177</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Stethoscope Technique</span>
+                <span class="tech-tag">Dynamic Relaxation</span>
+            </div>
+            <div class="card-desc">Autobiographical: how Gerda discovered psycho-peristalsis and the stethoscope technique. Origins of the methods.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="8.19 use voice biodynamic psychotherapy gerda boyesen 1218 voice technique listening">
+            <div class="card-top">
+                <span class="card-number">8.19</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>The Use of the Voice in Biodynamic Psychotherapy</h3>
+            <div class="card-author">Gerda Boyesen</div>
+            <div class="card-page">Page <span>1218</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Voice Technique</span>
+                <span class="tech-tag">Listening Technique</span>
+            </div>
+            <div class="card-desc">Voice as therapeutic technique: tone, rhythm, posture, atmosphere. The "tragic and trivial" approach.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="8.29 truly therapeutic massage denise mccrohan 1308 energy distribution basic touch deep draining lifting">
+            <div class="card-top">
+                <span class="card-number">8.29</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>A Truly Therapeutic Massage</h3>
+            <div class="card-author">Denise McCrohan</div>
+            <div class="card-page">Page <span>1308</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Energy Distribution</span>
+                <span class="tech-tag">Basic Touch</span>
+                <span class="tech-tag">Deep Draining</span>
+                <span class="tech-tag">Lifting</span>
+            </div>
+            <div class="card-desc">Introductory overview of all major techniques. Stethoscope use on abdomen for tracking peristalsis.</div>
+        </div>
+
+        <div class="card" data-rating="1" data-search="9.2 therapeutic insights infant massage shlomit eliashar 1403">
+            <div class="card-top">
+                <span class="card-number">9.2</span>
+                <div class="card-rating"><span class="star">&#9733;</span><span class="star empty">&#9733;</span><span class="star empty">&#9733;</span></div>
+            </div>
+            <h3>Therapeutic Insights into Infant Massage</h3>
+            <div class="card-author">Shlomit Eliashar</div>
+            <div class="card-page">Page <span>1403</span></div>
+            <div class="techniques-list">
+                <span class="tech-tag">Infant Massage</span>
+            </div>
+            <div class="card-desc">Biodynamic infant massage for mother-infant bonding. Oxytocin release, daily massage as regulatory practice.</div>
+        </div>
+
+    </div>
+
+    <!-- Techniques Summary Table -->
+    <div class="tech-summary">
+        <h2>Quick Reference: Techniques & Best Sources</h2>
+        <table class="tech-table">
+            <thead>
+                <tr>
+                    <th>Technique</th>
+                    <th>Best Article</th>
+                    <th>Page</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tech-name">Energy Distribution</td>
+                    <td>1.13 &mdash; Clover Southwell (definitive practical guide)</td>
+                    <td>139</td>
+                </tr>
+                <tr>
+                    <td class="tech-name">Deep Draining</td>
+                    <td>7.1 &mdash; Michael Heller + 8.4 &mdash; Monika Schaible</td>
+                    <td>1027, 1068</td>
+                </tr>
+                <tr>
+                    <td class="tech-name">Pulsatory Touch</td>
+                    <td>4.6 &mdash; Peg Nunneley (step-by-step with breath counts)</td>
+                    <td>559</td>
+                </tr>
+                <tr>
+                    <td class="tech-name">Vegeto-therapy (full session)</td>
+                    <td>8.24 &mdash; Clover Southwell (7-stage session manual)</td>
+                    <td>1271</td>
+                </tr>
+                <tr>
+                    <td class="tech-name">Working-Out Principle</td>
+                    <td>8.22 &mdash; Gerda Boyesen</td>
+                    <td>1258</td>
+                </tr>
+                <tr>
+                    <td class="tech-name">Emptying</td>
+                    <td>6.10 &mdash; Kathrin Stauffer + 8.4 &mdash; Monika Schaible</td>
+                    <td>929, 1068</td>
+                </tr>
+                <tr>
+                    <td class="tech-name">Basic Touch</td>
+                    <td>6.12 &mdash; Lorna McNeur + 8.4 &mdash; Monika Schaible</td>
+                    <td>938, 1068</td>
+                </tr>
+                <tr>
+                    <td class="tech-name">Jellyfish Exercises</td>
+                    <td>7.1 &mdash; Michael Heller</td>
+                    <td>1027</td>
+                </tr>
+                <tr>
+                    <td class="tech-name">Bio-Release</td>
+                    <td>2.3 &mdash; Mona-Lisa Boyesen</td>
+                    <td>179</td>
+                </tr>
+                <tr>
+                    <td class="tech-name">Connective Tissue Work</td>
+                    <td>6.12 &mdash; Lorna McNeur</td>
+                    <td>938</td>
+                </tr>
+                <tr>
+                    <td class="tech-name">Technique Selection Framework</td>
+                    <td>3.3.2 &mdash; Clover Southwell</td>
+                    <td>346</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<footer>
+    Based on: "The 'New' Collected Papers of Biodynamic Psychology, Massage & Psychotherapy: 2022" &middot; Edited by Courtenay Young &middot; Body Psychotherapy Publications
+</footer>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.card');
+    const sections = document.querySelectorAll('.section-header');
+    const noResults = document.getElementById('noResults');
+    let activeFilter = 'all';
+
+    function applyFilters() {
+        const query = searchInput.value.toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+            const searchData = card.getAttribute('data-search').toLowerCase();
+            const desc = card.querySelector('.card-desc')?.textContent.toLowerCase() || '';
+            const rating = card.getAttribute('data-rating');
+            const matchesSearch = !query || searchData.includes(query) || desc.includes(query);
+            const matchesFilter = activeFilter === 'all' || rating === activeFilter;
+            const visible = matchesSearch && matchesFilter;
+            card.classList.toggle('hidden', !visible);
+            if (visible) visibleCount++;
+        });
+
+        sections.forEach(sec => {
+            const sectionRating = sec.getAttribute('data-section');
+            if (activeFilter !== 'all' && sectionRating !== activeFilter) {
+                sec.classList.add('hidden');
+            } else {
+                const grid = sec.nextElementSibling;
+                const hasVisible = grid && grid.querySelectorAll('.card:not(.hidden)').length > 0;
+                sec.classList.toggle('hidden', !hasVisible);
+            }
+        });
+
+        noResults.classList.toggle('hidden', visibleCount > 0);
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeFilter = btn.getAttribute('data-filter');
+            applyFilters();
+        });
+    });
+</script>
+
+</body>
+</html>
