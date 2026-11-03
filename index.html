@@ -322,6 +322,57 @@
             font-weight: 600;
         }
 
+        /* Featured summaries */
+        .featured {
+            margin-bottom: 36px;
+            padding: 24px 28px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid #e94560;
+            border-radius: 14px;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .featured .featured-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #e94560;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .featured .featured-body { flex: 1; min-width: 260px; }
+        .featured h2 {
+            font-size: 1.4rem;
+            color: #fff;
+            margin: 0 0 6px;
+        }
+        .featured p {
+            color: #b0b0c0;
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .featured .featured-meta {
+            color: #7a7a8a;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+        .featured .featured-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #e94560;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .featured .featured-btn:hover { background: #ff5a75; transform: translateY(-2px); }
+
         .hidden { display: none !important; }
 
         .no-results {
@@ -362,6 +413,17 @@
 </div>
 
 <div class="container">
+
+    <!-- Featured summary -->
+    <section class="featured" id="featured">
+        <div class="featured-body">
+            <span class="featured-tag">סיכום מאמר &middot; Featured Summary</span>
+            <h2>שלבי התפתחות זרימת הליבידו &mdash; Alice Jacobus (1995)</h2>
+            <p>סיכום מפורט בעברית פשוטה של המאמר "Phases of Libido Circulation Development: A Psychopostural Perspective". תשעת השלבים ההתפתחותיים, המחזור הרגשי, טבלאות השוואה, דיאגרמות ומפת גוף. כל דוגמה מסומנת: מהמאמר או תוספת להמחשה.</p>
+            <div class="featured-meta">Hebrew summary &middot; 8 diagrams &middot; 15 tables &middot; based on the unfinished 1995 paper</div>
+        </div>
+        <a class="featured-btn" href="articles/jacobus-phases-of-libido.html">פתח את הסיכום &rarr;</a>
+    </section>
 
     <div class="controls">
         <div class="search-box">

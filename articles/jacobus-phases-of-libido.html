@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שלבי התפתחות זרימת הליבידו</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Assistant:wght@400;600;700&display=swap">
+<style>
+/* Layout: one reading column (~70ch), full-width bands for the big tables and diagrams. Hebrew RTL throughout. */
+:root {
+  --bg: #f6f4ee;
+  --surface: #ffffff;
+  --surface-2: #ede9df;
+  --fg: #22251f;
+  --muted: #5e6356;
+  --line: #d6d1c3;
+  --accent: #3f6b4f;       /* moss — the earth/root pole */
+  --accent-soft: #dfe9df;
+  --red: #b8432f;          /* red energy — the instinctual surge */
+  --red-soft: #f4ddd6;
+  --blue: #2f5f8a;         /* blue energy — the cosmic return */
+  --blue-soft: #d8e4ef;
+  --gold: #a4731a;         /* the Other / relational object */
+  --gold-soft: #f1e5c8;
+  --purple: #6b4f8a;       /* AI-added examples */
+  --purple-soft: #e6ddf0;
+  --font-display: "Frank Ruhl Libre", "David", "Times New Roman", serif;
+  --font-body: "Assistant", "Arial Hebrew", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1d19; --surface: #24271f; --surface-2: #2e3129;
+    --fg: #e8e5da; --muted: #a9ad9c; --line: #434738;
+    --accent: #8fbf9c; --accent-soft: #2b3f31;
+    --red: #e07a62; --red-soft: #4a2a23;
+    --blue: #7fa9d4; --blue-soft: #23354a;
+    --gold: #d9a94a; --gold-soft: #45391d;
+    --purple: #b89ad8; --purple-soft: #3a2d4a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1d19; --surface: #24271f; --surface-2: #2e3129;
+  --fg: #e8e5da; --muted: #a9ad9c; --line: #434738;
+  --accent: #8fbf9c; --accent-soft: #2b3f31;
+  --red: #e07a62; --red-soft: #4a2a23;
+  --blue: #7fa9d4; --blue-soft: #23354a;
+  --gold: #d9a94a; --gold-soft: #45391d;
+  --purple: #b89ad8; --purple-soft: #3a2d4a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.7;
+  direction: rtl; margin: 0;
+}
+.wrap {
+  max-width: 980px; margin: 0 auto;
+  padding-block: 32px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.25; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 3.1rem); font-weight: 900; }
+h2 { font-size: 1.75rem; font-weight: 700; margin-top: 56px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+h3 { font-size: 1.3rem; font-weight: 700; margin-top: 32px; }
+h4 { font-size: 1.05rem; font-weight: 700; margin-top: 20px; color: var(--accent); }
+p { margin: 12px 0; max-width: 72ch; }
+ul, ol { padding-inline-start: 1.4em; max-width: 72ch; }
+li { margin: 4px 0; }
+.eyebrow { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+header { display: grid; gap: 14px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--muted); font-size: .95rem; }
+.meta b { color: var(--fg); font-weight: 600; }
+.lead { font-size: 1.15rem; max-width: 70ch; }
+.note {
+  background: var(--surface-2); border-inline-start: 4px solid var(--gold);
+  padding: 12px 16px; border-radius: 4px; margin: 20px 0; max-width: 76ch;
+}
+.note p { margin: 4px 0; }
+.toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 6px 24px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin-top: 24px; }
+.toc a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.toc a:hover, .toc a:focus-visible { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* examples */
+.ex { margin: 14px 0; padding: 10px 14px; border-radius: 6px; max-width: 72ch; font-size: .97rem; }
+.ex::before { display: block; font-size: .75rem; font-weight: 700; letter-spacing: .06em; margin-bottom: 4px; }
+.ex.src { background: var(--gold-soft); border-inline-start: 4px solid var(--gold); }
+.ex.src::before { content: "דוגמה מהמאמר"; color: var(--gold); }
+.ex.ai { background: var(--purple-soft); border-inline-start: 4px solid var(--purple); }
+.ex.ai::before { content: "דוגמה שהבינה המלאכותית הוסיפה (לא מהמאמר)"; color: var(--purple); }
+.ex p { margin: 0; }
+.ex.src p + p, .ex.ai p + p { margin-top: 6px; }
+
+/* tables */
+.tbl { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+th, td { padding: 10px 12px; text-align: right; vertical-align: top; border-bottom: 1px solid var(--line); }
+th { background: var(--surface-2); font-weight: 700; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.k { font-weight: 700; white-space: nowrap; color: var(--accent); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* phase cards */
+.phase { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 22px 24px; margin-top: 28px; }
+.phase-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 8px; }
+.phase-head h3 { margin: 0; }
+.chip { display: inline-block; font-size: .8rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+.chip.red { background: var(--red-soft); color: var(--red); }
+.chip.blue { background: var(--blue-soft); color: var(--blue); }
+.chip.gold { background: var(--gold-soft); color: var(--gold); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
+.cell { background: var(--surface-2); border-radius: 6px; padding: 12px 14px; min-width: 0; }
+.cell .eyebrow { margin-bottom: 4px; display: block; }
+.cell p { margin: 0; font-size: .95rem; }
+.cell ul, .cell ol { margin: 0; font-size: .95rem; }
+.good { border-inline-start: 4px solid var(--accent); }
+.bad { border-inline-start: 4px solid var(--red); }
+blockquote { margin: 14px 0; padding: 10px 16px; border-inline-start: 3px solid var(--gold); background: var(--gold-soft); border-radius: 4px; font-style: italic; max-width: 70ch; }
+blockquote p { margin: 0; }
+
+/* diagrams */
+figure { margin: 22px 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
+figure .scroll { overflow-x: auto; }
+figure svg { display: block; width: 100%; height: auto; max-width: 100%; }
+figcaption { font-size: .9rem; color: var(--muted); margin-top: 10px; max-width: 76ch; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .85rem; color: var(--muted); margin-top: 8px; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-inline-end: 6px; vertical-align: -1px; background: var(--c); }
+
+/* flow */
+.flow { display: grid; gap: 10px; margin: 18px 0; }
+.flow-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; min-width: 0; font-size: .95rem; }
+.box b { display: block; margin-bottom: 4px; }
+.box.q { background: var(--gold-soft); border-color: var(--gold); text-align: center; font-weight: 700; }
+.box.ok { border-top: 4px solid var(--accent); }
+.box.no { border-top: 4px solid var(--red); }
+.arrow { text-align: center; color: var(--muted); font-size: 1.4rem; line-height: 1; }
+
+/* timeline */
+.timeline { display: grid; gap: 6px; margin: 18px 0; }
+.tl-row { display: grid; grid-template-columns: 150px 1fr; gap: 10px; align-items: center; }
+.tl-label { font-weight: 700; font-size: .95rem; }
+.tl-track { position: relative; height: 26px; background: var(--surface-2); border-radius: 4px; }
+.tl-bar { position: absolute; top: 3px; bottom: 3px; border-radius: 3px; background: var(--accent); opacity: .85; }
+.tl-bar.red { background: var(--red); }
+.tl-bar.blue { background: var(--blue); }
+.tl-bar.gold { background: var(--gold); }
+.tl-axis { display: grid; grid-template-columns: 150px 1fr; gap: 10px; font-size: .8rem; color: var(--muted); }
+.tl-axis div:last-child { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+@media (max-width: 520px) {
+  .tl-row, .tl-axis { grid-template-columns: 100px 1fr; }
+  body { font-size: 16px; }
+}
+footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+.backbar { font-size: .9rem; margin-bottom: 18px; }
+.backbar a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.backbar a:hover, .backbar a:focus-visible { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="backbar"><a href="../index.html">&rarr; חזרה לאינדקס הטכניקות / Back to the Techniques Index</a></div>
+<header>
+  <span class="eyebrow">סיכום מאמר · פסיכולוגיה ביודינמית</span>
+  <h1>שלבי התפתחות זרימת הליבידו</h1>
+  <p class="lead">סיכום בשפה פשוטה של המאמר של אליס ג'ייקובוס (1995). הרעיון המרכזי של המאמר: הנפש של האדם נבנית שלב אחרי שלב, כמו קומות בבניין. בכל שלב יש כוח פנימי (האנרגיה של הילד) שיוצא החוצה ומחפש אדם מסוים שיגיב אליו בדרך מסוימת. אם התגובה מגיעה, השלב נגמר בהצלחה ואפשר לעבור לקומה הבאה. אם לא, האנרגיה נתקעת, בנפש וגם בגוף.</p>
+  <div class="meta">
+    <span><b>מחברת:</b> Alice Jacobus</span>
+    <span><b>תאריך:</b> מרץ 1995</span>
+    <span><b>היקף:</b> 60 עמודים, טיוטה שלא הושלמה</span>
+    <span><b>הפצה:</b> לעמיתים ביודינמיים בלבד</span>
+  </div>
+  <nav class="toc" aria-label="תוכן">
+    <a href="#terms">מילון מילים קשות</a>
+    <a href="#system">חלק א: איך עובד רגש אחד מההתחלה עד הסוף</a>
+    <a href="#model">חלק ב: איך זה הופך למודל של התפתחות</a>
+    <a href="#phases">חלק ג: השלבים אחד־אחד</a>
+    <a href="#compare">טבלאות השוואה</a>
+    <a href="#body">מפת הגוף</a>
+    <a href="#treat">איך מטפלים בזה</a>
+    <a href="#gaps">מה חסר במאמר</a>
+  </nav>
+</header>
+
+<div class="note">
+  <p><b>איך לקרוא את הסיכום.</b> כל דוגמה מסומנת: תיבה בצבע זהב = דוגמה שמופיעה במאמר עצמו. תיבה בצבע סגול = דוגמה שהבינה המלאכותית הוסיפה כדי להסביר, והיא לא מהמאמר. בכל מקום שיש מילה מקצועית, היא מופיעה פעם אחת בסוגריים ליד ההסבר הפשוט.</p>
+  <p><b>על הטקסט המקורי.</b> המאמר הוא טיוטה: שלבים 8 ו־9 רק נזכרים בשמם, הסעיף על גיל ההתבגרות נקטע באמצע משפט, וכמה פסקאות (עמ' 12, 28, 37, 59) מכילות שורות שהתערבבו בסריקה. "אנחנו" במאמר פירושו: מסקנה מדיונים עם גרדה בויסן, מייסדת הפסיכולוגיה הביודינמית.</p>
+</div>
+
+<h2 id="terms">מילון מילים קשות</h2>
+<div class="tbl"><table>
+<thead><tr><th>המילה במאמר</th><th>באנגלית</th><th>במילים פשוטות</th></tr></thead>
+<tbody>
+<tr><td class="k">פסיכה־סומה</td><td>Psyche-soma</td><td>האדם השלם: הגוף (סומה) והאנרגיה הפנימית (פסיכה) ביחד, כיחידה אחת שאי אפשר להפריד.</td></tr>
+<tr><td class="k">פסיכה</td><td>Psyche</td><td>כוח החיים של האדם. הוא זורם בתוך הגוף וגם קצת מחוץ לו, כל הזמן בתנועה, ויוצר מעין "שדה" סביב כל אדם.</td></tr>
+<tr><td class="k">מבנה נפשי</td><td>Psychic structure</td><td>האישיות. לפי המאמר, האישיות היא סך כל "מסלולי הזרימה" של האנרגיה שהאדם בנה במהלך חייו.</td></tr>
+<tr><td class="k">ליבידו</td><td>Libido</td><td>החלק היוצר והבונה של כוח החיים. האנרגיה שדוחפת אותנו לגדול ולהתפתח. (לא רק "מיניות" כמו בשימוש היומיומי.)</td></tr>
+<tr><td class="k">אנרגיה ויטלית</td><td>Vital energy</td><td>האנרגיה שמתחזקת את הגוף ביום־יום: נשימה, עיכול, תיקון רקמות.</td></tr>
+<tr><td class="k">קודים של קיום</td><td>Codes of existence</td><td>ה"הוראות" הפנימיות שלפיהן אדם חי ומתנהג. אנחנו נולדים עם הוראות <b>אפשריות</b> (פוטנציאליות), והן הופכות להוראות <b>פעילות</b> רק אחרי שהחיים מאשרים אותן.</td></tr>
+<tr><td class="k">המחזור הרגשי</td><td>Emotional cycle</td><td>כל מה שקורה בגוף ובנפש מרגע שרגש מתעורר ועד שהוא נרגע לגמרי.</td></tr>
+<tr><td class="k">מחזור וזו־מוטורי</td><td>Vaso-motoric cycle</td><td>הצד הגופני של אותו רגש: שינויים בזרימת הדם ובמתח השרירים.</td></tr>
+<tr><td class="k">לולאת משוב</td><td>Feedback loop</td><td>מעגל של "אני נותן משהו, מקבל תגובה, והתגובה משנה אותי". כמו שיחה.</td></tr>
+<tr><td class="k">גל ושפל</td><td>Surge / Reflux</td><td>"גל" = האנרגיה יוצאת החוצה ומחפשת. "שפל" = האנרגיה חוזרת פנימה מרוצה. כמו גל בים שעולה על החוף וחוזר.</td></tr>
+<tr><td class="k">אנרגיה אדומה / כחולה</td><td>Red / Blue energy</td><td>אדום = הדחף הראשון, החם והאינסטינקטיבי. כחול = מה שחוזר אחר כך: רוגע, ביטחון, תחושה של חיבור למשהו גדול.</td></tr>
+<tr><td class="k">התמזגות קוסמית</td><td>Cosmic superimposition</td><td>רגע שבו המפגש עם אדם אחר כל כך מלא, שמרגישים חלק מהיקום כולו. המאמר אומר שזה קורה לתינוק כשמספקים אותו, ולמבוגרים בחיבוק מיני.</td></tr>
+<tr><td class="k">שריון גופני</td><td>Body armouring</td><td>מתח כרוני בשרירים שנשאר בגוף כשרגש לא הסתיים. עם הזמן הגוף "מדביק" את המתח עם פסולת של חילוף החומרים, והוא נהיה קשיח ולא נשלט ברצון.</td></tr>
+<tr><td class="k">פסיכו־פריסטלטיקה</td><td>Psychoperistalsis</td><td>תנועת המעיים שמלווה שחרור רגשי. בטיפול הביודינמי מקשיבים לקולות הבטן כדי לדעת שהגוף "מעכל" ומשחרר מתח.</td></tr>
+<tr><td class="k">אובייקט היחס</td><td>Relational object</td><td>האדם שהילד צריך בשלב מסוים (בדרך כלל אמא, אבא או החברה). הוא לא המטרה עצמה, אלא הדרך להשלים את השלב, אבל הדמות שלו נשארת מוטבעת בנפש.</td></tr>
+<tr><td class="k">צ'אקרה</td><td>Chakra</td><td>מרכז אנרגיה בגוף, לפי המסורת ההודית. במאמר: שורש (בסיס עמוד השדרה), עצה (אגן אחורי), פובית (מעל עצם החיק), מקלעת השמש (בטן עליונה), לב, מצח (העין השלישית), כתר.</td></tr>
+</tbody></table></div>
+
+<h2 id="system">חלק א: איך עובד רגש אחד, מההתחלה עד הסוף</h2>
+<p>המאמר פותח בהקדמה שמסבירה מחזור רגשי אחד, כי לטענת המחברת <b>שלב התפתחותי שלם הוא בסך הכול הרבה מחזורים רגשיים קטנים מאותו סוג</b>, ודפוס התנועה בשניהם זהה. מי שמבין איך רגש אחד מתחיל ונגמר, יבין איך שלב שלם מתחיל ונגמר.</p>
+
+<h3>האדם הוא מערכת אחת</h3>
+<ul>
+<li>כל מה שהאדם עושה, קורה בו־זמנית בכמה "מחלקות" של הגוף והנפש: שרירים, דם, עצבים, מחשבות, רגשות. הן משפיעות זו על זו כל הזמן.</li>
+<li>רגש הוא תנועה של אנרגיה בגוף. לכן כל רגש הוא גם מצב גופני, ואי אפשר להפריד ביניהם (רעיון של וילהלם רייך).</li>
+<li>השינויים הכי בולטים ברגש: זרימת הדם ומתח השרירים.</li>
+</ul>
+<div class="ex ai"><p>כשמישהו מפחיד אותך פתאום, הלב דופק, הפנים מחווירות והכתפיים מתכווצות. זה לא "פחד ואז תגובה של הגוף", זה אותו דבר. הפחד <b>הוא</b> הדופק והכתפיים.</p></div>
+
+<h3>מה המחברת מוסיפה</h3>
+<p>לרעיון הביודינמי היא מוסיפה רעיון מתורת המערכות (תחום שחוקר איך מערכות מורכבות מתנהגות): כשאדם פוגש את הסביבה, יש <b>חילוף אמיתי</b> של אנרגיה ומידע, לא רק בתוכו. והמידע שחוזר אליו חייב <b>להתאים למה שהוא ציפה</b> מבפנים, אחרת הוא לא יכול "לעכל" אותו.</p>
+
+<h3>שני סוגים של תגובה שחוזרת אלינו</h3>
+<div class="tbl"><table>
+<thead><tr><th></th><th>תגובה מרגיעה</th><th>תגובה מטלטלת</th></tr></thead>
+<tbody>
+<tr><td class="k">השם בתורת המערכות</td><td>"משוב שלילי" (למרות שהיא טובה)</td><td>"משוב חיובי" (למרות שהיא לא נעימה)</td></tr>
+<tr><td class="k">מה קורה</td><td>התגובה מאשרת מה שכבר ידעתי על עצמי. המסר: "אני בסדר כמו שאני".</td><td>התגובה לא מתאימה למה שציפיתי. אם זה חוזר שוב ושוב, אני חייב לשנות משהו באופן שבו אני חי.</td></tr>
+<tr><td class="k">איך זה מרגיש</td><td>הרפיה, חזרה לשגרה.</td><td>מתח גבוה, לא נוח, אבל יכול לדחוף לצמיחה.</td></tr>
+<tr><td class="k">התוצאה</td><td>אני נשאר כמו שהייתי.</td><td>אני עולה לרמה חדשה, מאוזנת יותר. ככה מערכות מתפתחות.</td></tr>
+</tbody></table></div>
+<div class="ex ai"><p><b>תגובה מרגיעה:</b> הגשת עבודה וקיבלת "מצוין, בדיוק כמו שחשבתי". נרגעת וממשיכים הלאה.<br><b>תגובה מטלטלת:</b> הגשת עבודה וקיבלת "זה לא מה שביקשתי" שלוש פעמים ברצף. זה לא נעים, אבל אחרי הפעם השלישית אתה משנה את הדרך שבה אתה עובד, וזו צמיחה.</p></div>
+
+<h3>11 תחנות של רגש שהסתיים בהצלחה</h3>
+<div class="ex src"><p>בחרת בקפידה כרטיס ברכה ומתנה לחבר טוב, כדי להביע שמחה על קיומו. אתה מצפה שהוא ישמח. כשאתה נותן לו (תחנה 4), הוא מאושר ואומר לך את זה (5). התגובה שלו היא בדיוק מה שקיווית, ואין לך בעיה לקבל אותה (6). אתה נרגע ומרגיש "מורחב" ושמח (7). בסוף היום אתה נזכר בזה ושום דבר לא מפריע לך ליהנות מהזיכרון. אתה מרגיש טוב עם עצמך, אולי אפילו הכרת תודה (8). אתה ישן טוב, והגוף מתנקה (9) ומתחדש (10). אתה חוזר למצב רגוע, אבל עכשיו קצת יותר עשיר מקודם (11).</p></div>
+
+<figure>
+<div class="scroll">
+<svg viewBox="0 0 900 330" role="img" aria-label="דיאגרמת המחזור הרגשי השלם: קשת עולה ממצב מנוחה דרך גירוי, מתח, טעינה וביטוי, לולאה דרך האחר, עיכול החוויה, התרחבות, לולאה דרך המערכת הגדולה, ניקוי, שיקום וחזרה למנוחה">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+  </defs>
+  <g font-family="Assistant, Arial, sans-serif" font-size="14">
+    <path d="M20 290 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0" fill="none" stroke="var(--blue)" stroke-width="2" opacity=".6"/>
+    <path d="M20 305 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0" fill="none" stroke="var(--blue)" stroke-width="2" opacity=".35"/>
+    <path d="M60 285 C 120 200, 190 120, 330 110" fill="none" stroke="var(--red)" stroke-width="4" marker-end="url(#ah)" color="var(--red)"/>
+    <path d="M330 110 C 400 110, 420 110, 470 110" fill="none" stroke="var(--gold)" stroke-width="4"/>
+    <path d="M470 110 C 560 110, 620 100, 680 120" fill="none" stroke="var(--blue)" stroke-width="4"/>
+    <path d="M680 120 C 760 150, 820 220, 850 285" fill="none" stroke="var(--blue)" stroke-width="4" marker-end="url(#ah)" color="var(--blue)"/>
+    <path d="M330 110 C 320 60, 360 30, 390 50 C 420 70, 380 110, 330 110" fill="none" stroke="var(--gold)" stroke-width="3"/>
+    <circle cx="395" cy="40" r="14" fill="var(--gold)"/>
+    <text x="395" y="20" text-anchor="middle" fill="var(--fg)" font-weight="700">האדם השני</text>
+    <path d="M400 110 C 380 150, 400 190, 430 170 C 455 150, 430 115, 400 110" fill="none" stroke="var(--accent)" stroke-width="3"/>
+    <path d="M680 120 C 690 60, 740 40, 760 70 C 780 100, 720 125, 680 120" fill="none" stroke="var(--blue)" stroke-width="3"/>
+    <text x="745" y="40" text-anchor="middle" fill="var(--fg)" font-weight="700">המערכת הגדולה</text>
+    <text x="745" y="58" text-anchor="middle" fill="var(--muted)" font-size="12">(תחושת חיבור למשהו גדול ממני)</text>
+    <g fill="var(--surface)" stroke="var(--fg)" stroke-width="1.5">
+      <circle cx="60" cy="285" r="12"/><circle cx="110" cy="215" r="12"/><circle cx="180" cy="150" r="12"/>
+      <circle cx="265" cy="112" r="12"/><circle cx="365" cy="85" r="12"/><circle cx="440" cy="168" r="12"/>
+      <circle cx="560" cy="108" r="12"/><circle cx="700" cy="95" r="12"/><circle cx="740" cy="160" r="12"/>
+      <circle cx="800" cy="215" r="12"/><circle cx="850" cy="285" r="12"/>
+    </g>
+    <g fill="var(--fg)" font-size="12" font-weight="700" text-anchor="middle">
+      <text x="60" y="289">1</text><text x="110" y="219">2</text><text x="180" y="154">3</text><text x="265" y="116">4</text>
+      <text x="365" y="89">5</text><text x="440" y="172">6</text><text x="560" y="112">7</text><text x="700" y="99">8</text>
+      <text x="740" y="164">9</text><text x="800" y="219">10</text><text x="850" y="289">11</text>
+    </g>
+    <text x="150" y="235" text-anchor="middle" fill="var(--red)" font-weight="700">הגוף דרוך</text>
+    <text x="790" y="260" text-anchor="middle" fill="var(--blue)" font-weight="700">הגוף נח ומתחדש</text>
+    <text x="450" y="322" text-anchor="middle" fill="var(--muted)" font-size="12">מצב מנוחה – מאגר האנרגיה</text>
+  </g>
+</svg>
+</div>
+<figcaption>שחזור של הציור במאמר (עמ' 9). הקו 1–3 ו־6–11 הוא מסע האנרגיה בתוך האדם. תחנות 4–5 הן הרגע שבו האנרגיה "יוצאת" לאדם השני וחוזרת ממנו עם תגובה.</figcaption>
+<div class="legend"><span style="--c: var(--red)">יציאה החוצה (אנרגיה אדומה)</span><span style="--c: var(--gold)">מעבר דרך האדם השני</span><span style="--c: var(--accent)">עיכול החוויה בראש</span><span style="--c: var(--blue)">חזרה ומנוחה (אנרגיה כחולה)</span></div>
+</figure>
+
+<div class="tbl"><table>
+<thead><tr><th class="num">#</th><th>תחנה</th><th>מה קורה</th><th>מצב הגוף</th></tr></thead>
+<tbody>
+<tr><td class="num">H</td><td class="k">מנוחה</td><td>המצב הרגיל, הרגוע. מכאן האנרגיה יוצאת ולכאן היא חוזרת. (במאמר: הומאוסטזיס.)</td><td rowspan="5">הגוף דרוך ומופנה החוצה. עבודות התחזוקה הפנימיות מושהות. (מערכת העצבים הסימפתטית פעילה.)</td></tr>
+<tr><td class="num">1</td><td class="k">גירוי</td><td>משהו מעורר רגש. (בשלב התפתחותי הגירוי מגיע מבפנים, מהדחף לגדול, לא מבחוץ.)</td></tr>
+<tr><td class="num">2</td><td class="k">מתח</td><td>אנחנו מתכוננים.</td></tr>
+<tr><td class="num">3</td><td class="k">טעינה</td><td>האנרגיה היומיומית הופכת לאנרגיה רגשית. כל הגוף נטען.</td></tr>
+<tr><td class="num">4</td><td class="k">ביטוי</td><td>האנרגיה יוצאת החוצה ופוגשת את מה שעורר אותה.</td></tr>
+<tr><td class="num">5</td><td class="k">תגובה חוזרת</td><td>האנרגיה חוזרת דרך האדם השני, עם מידע עליי ועל מה שעשיתי.</td><td rowspan="2">מעבר</td></tr>
+<tr><td class="num">6</td><td class="k">עיכול בראש</td><td>המחשבה בודקת: האם התגובה מתאימה למה שציפיתי? אם כן, היא שומרת זיכרון של החוויה ונרגעת.</td></tr>
+<tr><td class="num">7</td><td class="k">התרחבות</td><td>תחושה טובה ורחבה.</td><td rowspan="5">הגוף נרגע ומתחדש. (מערכת העצבים הפאראסימפתטית פעילה.)</td></tr>
+<tr><td class="num">8</td><td class="k">עיכול בנפש</td><td>החוויה מתקבלת עד הסוף. תחושת ערך, הכרת תודה, פתיחות. הגוף נרפה לגמרי.</td></tr>
+<tr><td class="num">9</td><td class="k">ניקוי</td><td>הגוף מנקה ומתקן רקמות.</td></tr>
+<tr><td class="num">10</td><td class="k">התחדשות</td><td>התאים מקבלים מטען חדש של אנרגיה.</td></tr>
+<tr><td class="num">11</td><td class="k">מנוחה חדשה</td><td>רגוע שוב, אבל לא בדיוק כמו קודם: עשיר יותר בגלל החוויה שהסתיימה.</td></tr>
+</tbody></table></div>
+
+<h3>מה קורה כשהראש לא מצליח לעכל את התגובה</h3>
+<div class="flow">
+  <div class="box q">התגובה חזרה. האם היא מתאימה למה שאני יודע על עצמי ועל העולם?</div>
+  <div class="flow-row">
+    <div class="box ok"><b>כן – החוויה מתעכלת</b>הזיכרון נשמר, האנרגיה ממשיכה לתחנה הבאה. המחשבות והשרירים נרפים. חוזרים למנוחה, קצת יותר עשירים.</div>
+    <div class="box no"><b>לא – החוויה נתקעת</b>האנרגיה נעצרת בשרירים (אלה שבשליטת הרצון). החוויה נשארת כבלבול או דאגה בראש, וכמתח בגוף.</div>
+  </div>
+  <div class="arrow">↓</div>
+  <div class="flow-row">
+    <div class="box ok"><b>פתרון מאוחר</b>הראש מוצא דרך חדשה להבין את מה שקרה, מקבל את החוויה ומשחרר אותה.</div>
+    <div class="box no"><b>שריון גופני</b>הגוף "מדביק" את המתח עם פסולת של חילוף החומרים, עד שהמתח נהיה מכני ולא נשלט ברצון. הראש משתחרר מהדאגה, אבל הגוף מתקשח, והאדם מאבד מגע עם חלק מכוח החיים שלו.</div>
+  </div>
+</div>
+<div class="ex ai"><p>מישהו אמר לך משפט פוגע בפגישה. לא הבנת למה, ולא ידעת מה לעשות עם זה. שבוע אחרי, הכתפיים עדיין תפוסות ואתה עדיין "מגלגל" את המשפט בראש. אם תמצא הסבר ("הוא היה בלחץ, זה לא עליי") המתח ישתחרר. אם לא, אחרי חודשים הכתפיים כבר תפוסות גם בלי שאתה זוכר למה. זה, לפי המאמר, שריון.</p></div>
+<p><b>רגש שהסתיים</b> = בוטא, וגם עוכל. <b>רגש שלא הסתיים</b> = הביטוי או העיכול נמנעו. המאמר אומר שלרגשות שלא הסתיימו יכולות להיות תוצאות גופניות חמורות.</p>
+
+<h2 id="model">חלק ב: איך זה הופך למודל של התפתחות</h2>
+
+<h3>הנחות היסוד</h3>
+<ul>
+<li>גוף, נפש ורוח הם חלקים של דבר אחד. אי אפשר להבין אחד בלי השניים האחרים.</li>
+<li>אנחנו נולדים עם "תוכנית" פנימית להתפתחות, אבל התוכנית צריכה אישור מהחיים. בלי האישור, היא נשארת תוכנית על הנייר.</li>
+<li>כמו שהגוף גדל גם מהגנים וגם מאוכל ואוויר, כך הנפש גדלה גם מהתוכנית הפנימית וגם מהמפגשים עם אנשים. בכל שלב הילד צריך <b>תגובה מסוימת</b> מאדם מסוים, וההתנהגות שלו מכוונת לקבל בדיוק אותה.</li>
+</ul>
+<div class="ex src"><p>תינוק בן יום צריך מאמא שלו בעיקר הגנה והזנה. ילד בן שנתיים צריך מאותה אמא משהו אחר לגמרי: להתווכח איתה ולנצח לפעמים ("מאבק רצונות"). התגובה הנכונה של האם בכל גיל היא מה שמאפשר לילד לממש את התוכנית של אותו שלב.</p></div>
+
+<h3>ממי המחברת לקחה את הרעיונות</h3>
+<div class="tbl"><table>
+<thead><tr><th>מקור</th><th>מה נלקח ממנו</th></tr></thead>
+<tbody>
+<tr><td class="k">גרדה בויסן</td><td>מייסדת הפסיכולוגיה הביודינמית. ממנה: הצד הרוחני, הרעיון של "שלבי זרימת הליבידו", אנרגיה אדומה וכחולה, ההתמזגות הקוסמית. השותפה העיקרית לדיונים.</td></tr>
+<tr><td class="k">וילהלם רייך</td><td>פסיכואנליטיקאי שחקר את הקשר בין רגש לגוף. ממנו: רגש וגוף הם אחד, שריון, איך אנרגיה נעה בתוך גוף חי.</td></tr>
+<tr><td class="k">זיגמונד פרויד</td><td>השלבים הפסיכו־מיניים (אורלי, אנאלי, פאלי), ההבחנה בין אהבה חיבתית לתשוקה גופנית, השלב שבו הבת קשורה לאמה לפני שהיא פונה לאביה.</td></tr>
+<tr><td class="k">תורת המערכות</td><td>איך מערכות מורכבות מגיבות למשוב ומשתנות. בעיקר ג'ואנה מייסי.</td></tr>
+<tr><td class="k">מונה ליזה בויסן</td><td>בתה של גרדה. תצפיות מדויקות על התינוק שלה: ה"טראנס" של התינוק, שינה בשלב החלומות (REM), ההנקה כחוויה של אושר עז.</td></tr>
+<tr><td class="k">אבה בויסן</td><td>הרעיון שהמשימה של הילד בגיל 4 היא לבנות בתוכו תמונה של זוג אוהב.</td></tr>
+<tr><td class="k">אחרים</td><td>אלפרד טומטיס (העובר שומע את קול אמו), אלסוורת' בייקר (ראייה בשתי עיניים), מרגרט מאהלר (תחושת כל־יכולת אצל פעוטות), ברברה ברנן (צ'אקרות), גופי קרישנה (קונדליני), קלובר סאות'וול (עזרה בניסוח).</td></tr>
+</tbody></table></div>
+
+<h3>הנפש בנויה מ"מסלולים" של אנרגיה</h3>
+<p>הנפש מכילה חלקים קטנים (מחשבה, רגש) ונמצאת בתוך דברים גדולים ממנה (משפחה, חברה, עולם). כל שלב שהושלם יוצר "מסלול" קבוע של זרימת אנרגיה, והאישיות היא סך כל המסלולים האלה. בכל רגע מסלול אחר יכול להיות "השחקן הראשי", ולפעמים יש תקופות שבהן כל המסלולים מסתדרים מחדש זה עם זה.</p>
+
+<figure>
+<svg viewBox="0 0 700 260" role="img" aria-label="ציור של המבנה הנפשי: נקודה של הפוטנציאל שממנה יוצאות לולאות הולכות וגדלות, כל לולאה היא מסלול אנרגיה של שלב שהושלם">
+  <g font-family="Assistant, Arial, sans-serif" font-size="14" fill="var(--fg)">
+    <g fill="none" stroke="var(--accent)" stroke-width="2.5">
+      <ellipse cx="430" cy="150" rx="30" ry="20" transform="rotate(-35 430 150)"/>
+      <ellipse cx="445" cy="135" rx="55" ry="37" transform="rotate(-35 445 135)"/>
+      <ellipse cx="460" cy="120" rx="80" ry="54" transform="rotate(-35 460 120)"/>
+      <ellipse cx="475" cy="105" rx="105" ry="71" transform="rotate(-35 475 105)"/>
+      <ellipse cx="490" cy="90" rx="130" ry="88" transform="rotate(-35 490 90)"/>
+    </g>
+    <circle cx="410" cy="170" r="7" fill="var(--red)"/>
+    <text x="400" y="205" text-anchor="end" font-weight="700">התוכנית הפנימית</text>
+    <text x="400" y="223" text-anchor="end" fill="var(--muted)" font-size="12">(מה שעוד לא התממש)</text>
+    <line x1="405" y1="195" x2="410" y2="178" stroke="var(--muted)" stroke-width="1"/>
+    <text x="150" y="60" text-anchor="middle" font-weight="700">מסלולי אנרגיה</text>
+    <text x="150" y="80" text-anchor="middle" fill="var(--muted)" font-size="12">(שלבים שהושלמו, כל לולאה = שלב)</text>
+    <line x1="235" y1="70" x2="330" y2="80" stroke="var(--muted)" stroke-width="1"/>
+    <path d="M640 30 L655 30 L655 180 L640 180" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+    <text x="665" y="110" text-anchor="start" font-weight="700" writing-mode="tb" font-size="13">האישיות</text>
+  </g>
+</svg>
+<figcaption>שחזור הציור בעמ' 13. כל לולאה חדשה שנבנית נעשית חלק מהנפש, ובסיס ללולאה הבאה.</figcaption>
+</figure>
+
+<h3>שלושה תפקידים של אנרגיית החיים</h3>
+<div class="tbl"><table>
+<thead><tr><th>תפקיד</th><th>השם</th><th>הסבר</th></tr></thead>
+<tbody>
+<tr><td class="k">לבנות</td><td>ליבידו</td><td>האנרגיה שגורמת לנו לגדול. בכל שלב היא "מתיישבת" באזור נוסף בגוף: תופסת אותו, מעצבת אותו ומביאה אליו מודעות.</td></tr>
+<tr><td class="k">לתחזק</td><td>אנרגיה ויטלית</td><td>תוספת של המחברת לחלוקה של פרויד. האנרגיה של היום־יום.</td></tr>
+<tr><td class="k">להרוס</td><td>תנטוס</td><td>הצד ההרסני לפי פרויד.</td></tr>
+</tbody></table></div>
+
+<h3>תשעת השלבים</h3>
+<div class="tbl"><table>
+<thead><tr><th class="num">#</th><th>שלב</th><th>מה האנרגיה מחפשת</th><th>מה יש במאמר</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td class="k">ברחם</td><td rowspan="6">קשר עם אנשים ועם הגוף</td><td>תיאור קצר</td></tr>
+<tr><td class="num">2</td><td class="k">העיניים (אוקולרי)</td><td>תיאור</td></tr>
+<tr><td class="num">3</td><td class="k">הפה (אורלי)</td><td>תיאור מפורט, כולל סיפור של מטופל</td></tr>
+<tr><td class="num">4</td><td class="k">פי הטבעת (אנאלי)</td><td>תיאור מפורט</td></tr>
+<tr><td class="num">5</td><td class="k">איבר המין החיצוני (פאלי / קליטורלי)</td><td>תיאור מפורט</td></tr>
+<tr><td class="num">6</td><td class="k">הלב ואיבר המין (גניטלי־לב)</td><td>תיאור מפורט. <b>הגשר</b> בין שני סוגי החיפוש.</td></tr>
+<tr><td class="num">7</td><td class="k">העין השלישית (המצח)</td><td rowspan="3">קשר עם דברים גדולים מהאדם: החברה, כדור הארץ, היקום</td><td>תיאור</td></tr>
+<tr><td class="num">8</td><td class="k">איחוד קו האמצע</td><td>רק השם</td></tr>
+<tr><td class="num">9</td><td class="k">קונדליני</td><td>רק השם</td></tr>
+</tbody></table></div>
+
+<h3>איך שלב מסתיים: גל, שפל, גל חוזר, שפל</h3>
+<p>בכל שלב לאנרגיה יש משימה: לבנות חלק מסוים של הנפש. בשביל זה היא צריכה אדם מסוים. היא יוצאת אליו ("גל"), וכשהיא מקבלת ממנו את מה שהיא צריכה, היא חוזרת מרוצה ("שפל"). שני דברים חייבים לקרות:</p>
+<ol>
+<li><b>חיבור.</b> האדם השני חייב להגיב בקבלה (המאמר קורא לזה אהבה). שתי האנרגיות נפגשות.</li>
+<li><b>התאמה.</b> התגובה שחוזרת חייבת להתאים למה שהילד ציפה לו מבפנים. אז הילד כולו מתמלא הנאה ורווחה, והאנרגיה חוזרת, סוגרת את המעגל, ונערמת כבסיס לחיפוש הבא.</li>
+</ol>
+<p>אם האנרגיה <b>לא</b> מקבלת את התגובה, היא לא יכולה להמשיך. היא <b>נתקעת</b> באותו שלב ובאותו אדם, ומנסה שוב ושוב לקבל את התגובה, גם כשהאדם כבר מבוגר. רק אחרי שהשפל הושלם, האנרגיה יכולה לעזוב את האדם ההוא ולחפש את היעד הבא. האדם השני הוא אמצעי ולא מטרה, אבל הדמות והתגובה שלו נשארות מוטבעות בנפש.</p>
+<div class="ex ai"><p>אדם בן 40 שעדיין מחפש, בכל בוס ובכל בן זוג, את המילים "אני גאה בך" שלא שמע מאביו. לפי המאמר, האנרגיה של אותו שלב עדיין "מחכה" לתגובה, ומנסה לקבל אותה מכל מי שמזכיר את האב.</p></div>
+
+<figure>
+<div class="scroll">
+<svg viewBox="0 0 900 300" role="img" aria-label="ציור השלב ההתפתחותי: גל אדום עולה ממנוחה אל האדם השני, תגובה, שפל, עיכול, גל חוזר אל היקום, אנרגיה כחולה חוזרת, שפל למנוחה חדשה">
+  <g font-family="Assistant, Arial, sans-serif" font-size="13" fill="var(--fg)">
+    <path d="M20 265 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0" fill="none" stroke="var(--blue)" stroke-width="2" opacity=".5"/>
+    <path d="M20 280 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0" fill="none" stroke="var(--blue)" stroke-width="2" opacity=".3"/>
+    <path d="M60 262 C 120 170, 200 100, 300 75" fill="none" stroke="var(--red)" stroke-width="4" marker-end="url(#ah)" color="var(--red)"/>
+    <text x="150" y="140" text-anchor="middle" fill="var(--red)" font-weight="700">גל (אנרגיה אדומה)</text>
+    <path d="M300 75 C 290 35, 340 15, 370 40 C 395 62, 355 90, 300 75" fill="none" stroke="var(--gold)" stroke-width="3"/>
+    <circle cx="370" cy="30" r="13" fill="var(--gold)"/>
+    <text x="370" y="14" text-anchor="middle" font-weight="700">האדם השני</text>
+    <text x="235" y="40" text-anchor="middle" fill="var(--muted)" font-size="12">תגובה מרגיעה</text>
+    <path d="M330 85 C 370 110, 400 140, 420 165" fill="none" stroke="var(--red)" stroke-width="3" marker-end="url(#ah)" color="var(--red)"/>
+    <text x="395" y="115" text-anchor="start" fill="var(--red)" font-size="12">שפל</text>
+    <path d="M420 165 C 400 200, 420 235, 450 215 C 475 198, 450 170, 420 165" fill="none" stroke="var(--accent)" stroke-width="3"/>
+    <text x="440" y="252" text-anchor="middle" fill="var(--accent)" font-size="12" font-weight="700">עיכול החוויה</text>
+    <path d="M445 190 C 500 150, 560 100, 640 80" fill="none" stroke="var(--blue)" stroke-width="4" marker-end="url(#ah)" color="var(--blue)"/>
+    <text x="545" y="100" text-anchor="middle" fill="var(--blue)" font-weight="700">גל חוזר</text>
+    <path d="M640 80 C 650 35, 710 20, 730 50 C 750 80, 690 100, 640 80" fill="none" stroke="var(--blue)" stroke-width="3"/>
+    <text x="700" y="18" text-anchor="middle" font-weight="700">היקום ("ים האורגון")</text>
+    <path d="M700 95 C 760 140, 820 200, 850 262" fill="none" stroke="var(--blue)" stroke-width="4" marker-end="url(#ah)" color="var(--blue)"/>
+    <text x="810" y="170" text-anchor="start" fill="var(--blue)" font-weight="700" font-size="12">שפל</text>
+    <text x="760" y="235" text-anchor="start" fill="var(--blue)" font-size="12">אנרגיה כחולה</text>
+    <text x="60" y="295" text-anchor="middle" font-weight="700" font-size="12">מנוחה 1</text>
+    <text x="850" y="295" text-anchor="middle" font-weight="700" font-size="12">מנוחה 2</text>
+  </g>
+</svg>
+</div>
+<figcaption>שחזור הציור בעמ' 20. הגל הראשון (אדום, אינסטינקטיבי) פוגש את האדם השני. אחרי העיכול, האנרגיה עולה שוב כ"גל חוזר" ונפגשת עם משהו גדול יותר, וחוזרת כאנרגיה כחולה שמביאה ביטחון, חיוניות ושמחה.</figcaption>
+</figure>
+
+<h4>הרגע שבו "נדלק האור"</h4>
+<p>מפגש שמספק את הילד הוא לא רק נעים: הוא מציף את כל המערכת באנרגיה. האדם השני הוא כמו <b>זרז</b> (קטליזטור): מה שהילד מקבל מהמפגש הוא הרבה יותר ממה שהמבוגר נתן. העודף הזה פותח "נתיבים" חדשים בנפש, והאנרגיה של הילד "מאירה" (lumination) ומתפשטת מעבר לגבולות הרגילים. כך נבנה המרכז של השלב הבא. המסקנה של המאמר: <b>אהבה היא מה שמקדם התפתחות.</b> והערה: תחושת "אני בסדר ומקובל" היא מחשבה בלי מילים, ואולי היא המפתח שפותח את הילד לאנרגיה הזאת.</p>
+<div class="ex ai"><p>ילד שמראה לאבא ציור, ואבא באמת מסתכל, מתלהב ותולה אותו על המקרר. הילד מקבל הרבה יותר מ"ציור יפה": הוא מתמלא ורץ לצייר עוד חמישה. האבא נתן 30 שניות, הילד קיבל שעה של אנרגיה.</p></div>
+
+<h3>ארבעה מצבים של שלב: מסופק, לא מסופק, חסום; קפוא או פעיל</h3>
+<div class="tbl"><table>
+<thead><tr><th>המצב</th><th>מה קרה לאנרגיה</th><th>קפוא</th><th>פעיל</th></tr></thead>
+<tbody>
+<tr><td class="k">מסופק</td><td>השלב הושלם. יש מסלול קבוע שכבר לא צריך את האדם השני.</td><td>יכול להיות "משוריין" אם החברה דחתה את התכונות שלו.</td><td>פועל בחיים של היום.</td></tr>
+<tr><td class="k">לא מסופק</td><td>האנרגיה נטענה, יצאה, ולא קיבלה תגובה. נשארה תקועה באותו שלב ובאותו אדם.</td><td>כמעט בלי תנועה. האנרגיה נעולה במתח שרירים כרוני (שריון).</td><td>האנרגיה התקועה פעילה בחיי היום־יום: ניסיונות חוזרים לקבל את התגובה.</td></tr>
+<tr><td class="k">חסום (מודחק)</td><td>האנרגיה נעצרה עוד לפני שיצאה. אפילו לא הספיקה להיטען.</td><td colspan="2">לא רלוונטי, כי אין מסלול פעיל.</td></tr>
+</tbody></table></div>
+<div class="ex src"><p>דוגמה ל"מסופק אבל קפוא": ילד בן 8 רך לב, שקיבל מספיק אהבה, נשלח לפנימייה. כדי להתמודד עם הפרידה השוברת לב מיקיריו, הוא לומד לשריין את עצמו <b>נגד היכולת שלו לאהוב</b>. היכולת קיימת, אבל קפואה.</p></div>
+
+<figure>
+<svg viewBox="0 0 900 230" role="img" aria-label="שלושה תרשימי פסים X Y Z: התפתחות מלאה; התפתחות שבה חצי מהשלב האורלי תקוע; והתפתחות שבה קצת תקוע בכל שלב ובשלב הלב הכול תקוע">
+  <g font-family="Assistant, Arial, sans-serif" font-size="12" fill="var(--fg)">
+    <text x="150" y="20" text-anchor="middle" font-weight="700">ציור X – התפתחות מלאה</text>
+    <g>
+      <text x="30" y="60" text-anchor="middle" fill="var(--muted)">פה</text>
+      <text x="30" y="100" text-anchor="middle" fill="var(--muted)">אנאלי</text>
+      <text x="30" y="140" text-anchor="middle" fill="var(--muted)">פאלי</text>
+      <text x="30" y="180" text-anchor="middle" fill="var(--muted)">לב</text>
+      <g fill="var(--accent)">
+        <rect x="50" y="48" width="200" height="16" rx="3"/><rect x="50" y="88" width="200" height="16" rx="3"/>
+        <rect x="50" y="128" width="200" height="16" rx="3"/><rect x="50" y="168" width="200" height="16" rx="3"/>
+      </g>
+    </g>
+    <text x="450" y="20" text-anchor="middle" font-weight="700">ציור Y – חצי מהשלב האורלי תקוע</text>
+    <g>
+      <text x="330" y="60" text-anchor="middle" fill="var(--muted)">פה</text>
+      <text x="330" y="100" text-anchor="middle" fill="var(--muted)">אנאלי</text>
+      <text x="330" y="140" text-anchor="middle" fill="var(--muted)">פאלי</text>
+      <text x="330" y="180" text-anchor="middle" fill="var(--muted)">לב</text>
+      <rect x="350" y="48" width="100" height="16" rx="3" fill="var(--accent)"/><rect x="450" y="48" width="100" height="16" rx="3" fill="var(--red)"/>
+      <rect x="350" y="88" width="100" height="16" rx="3" fill="var(--accent)"/><rect x="450" y="88" width="100" height="16" rx="3" fill="var(--surface-2)" stroke="var(--line)"/>
+      <rect x="350" y="128" width="100" height="16" rx="3" fill="var(--accent)"/><rect x="450" y="128" width="100" height="16" rx="3" fill="var(--surface-2)" stroke="var(--line)"/>
+      <rect x="350" y="168" width="100" height="16" rx="3" fill="var(--accent)"/><rect x="450" y="168" width="100" height="16" rx="3" fill="var(--surface-2)" stroke="var(--line)"/>
+    </g>
+    <text x="750" y="20" text-anchor="middle" font-weight="700">ציור Z – "אופי היסטרי"</text>
+    <g>
+      <text x="630" y="60" text-anchor="middle" fill="var(--muted)">פה</text>
+      <text x="630" y="100" text-anchor="middle" fill="var(--muted)">אנאלי</text>
+      <text x="630" y="140" text-anchor="middle" fill="var(--muted)">פאלי</text>
+      <text x="630" y="180" text-anchor="middle" fill="var(--muted)">לב</text>
+      <rect x="650" y="48" width="170" height="16" rx="3" fill="var(--accent)"/><rect x="820" y="48" width="30" height="16" rx="3" fill="var(--red)"/>
+      <rect x="650" y="88" width="170" height="16" rx="3" fill="var(--accent)"/><rect x="820" y="88" width="30" height="16" rx="3" fill="var(--red)"/>
+      <rect x="650" y="128" width="170" height="16" rx="3" fill="var(--accent)"/><rect x="820" y="128" width="30" height="16" rx="3" fill="var(--red)"/>
+      <rect x="650" y="168" width="200" height="16" rx="3" fill="var(--red)"/>
+    </g>
+    <g font-size="11" fill="var(--muted)">
+      <rect x="300" y="205" width="12" height="12" fill="var(--accent)"/><text x="318" y="215" text-anchor="start">הושלם</text>
+      <rect x="400" y="205" width="12" height="12" fill="var(--red)"/><text x="418" y="215" text-anchor="start">תקוע (לא מסופק)</text>
+      <rect x="540" y="205" width="12" height="12" fill="var(--surface-2)" stroke="var(--line)"/><text x="558" y="215" text-anchor="start">עוד לא הופעל</text>
+    </g>
+  </g>
+</svg>
+<figcaption>ציור שלנו לפי התיאור במאמר (עמ' 21; הציורים המקוריים X, Y, Z לא נכללו בקובץ). המאמר מצייר כל שלב כעשרה מחזורים רגשיים. הרעיון: האנרגיה שחוזרת משלב <b>שהושלם</b> היא מה שמדליק את השלב הבא. לכן תקיעה בשלב מוקדם משפיעה על כל מה שבא אחריו. בציור Z המחברת מדמיינת מבוגר שמשתמש ביכולות השליטה (אנאלי) והכוח (פאלי) כדי לשלוט ברגשות הלב שלא סופקו.</figcaption>
+</figure>
+
+<h3>מה זה עושה לגוף</h3>
+<ul>
+<li>האנרגיה עוברת דרך עצבים, מוח, דם, שרירים ורקמות חיבור. בדרך היא גם <b>מנקה</b> אותם מפסולת.</li>
+<li>שלב שלא הושלם משאיר: מתח קל וקבוע בסרעפת ובשרירים, ופסולת שלא פונתה. הפסולת נערמת ברקמות. פסולת + מתח קבוע = שריון.</li>
+<li><b>צורת השריון מספרת איזה שלב נתקע.</b> שריון של מי שנתקע בשלב הפה שונה משריון של מי שנתקע בשלב הפאלי. לכן המבנה של גוף המבוגר מספר הרבה על ההיסטוריה הרגשית שלו.</li>
+</ul>
+
+<h2 id="phases">חלק ג: השלבים אחד־אחד</h2>
+
+<div class="timeline" role="img" aria-label="ציר זמן של השלבים מהעיבור עד גיל 8">
+  <div class="tl-row"><div class="tl-label">ברחם</div><div class="tl-track"><div class="tl-bar gold" style="right:0; width:10%"></div></div></div>
+  <div class="tl-row"><div class="tl-label">העיניים</div><div class="tl-track"><div class="tl-bar blue" style="right:10%; width:9%"></div></div></div>
+  <div class="tl-row"><div class="tl-label">הפה</div><div class="tl-track"><div class="tl-bar red" style="right:11%; width:18%"></div></div></div>
+  <div class="tl-row"><div class="tl-label">אנאלי</div><div class="tl-track"><div class="tl-bar" style="right:20%; width:18%"></div></div></div>
+  <div class="tl-row"><div class="tl-label">פאלי</div><div class="tl-track"><div class="tl-bar red" style="right:28%; width:24%"></div></div></div>
+  <div class="tl-row"><div class="tl-label">הלב</div><div class="tl-track"><div class="tl-bar gold" style="right:52%; width:10%"></div></div></div>
+  <div class="tl-row"><div class="tl-label">העין השלישית</div><div class="tl-track"><div class="tl-bar blue" style="right:62%; width:28%"></div></div></div>
+  <div class="tl-axis"><div></div><div><span>עיבור</span><span>לידה</span><span>1.5</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span></div></div>
+</div>
+<p class="eyebrow">הציר סכמטי ולא מדויק. הגילים לפי המאמר: השלב האנאלי "מושרש היטב" בגיל שנה וחצי, זהות ה"אני" בגיל 3, זהות מגדרית עד סוף גיל 4, שלב הלב בשנה החמישית, העין השלישית מגיל 6 עד סוף גיל 8, "סגירת העין השלישית" בגיל 7.</p>
+
+<!-- ============ INTRA-UTERINE ============ -->
+<div class="phase" id="p1">
+  <div class="phase-head"><h3>1. ברחם</h3><span class="chip gold">מהעיבור עד הלידה</span><span class="chip">מרכז: האוזן</span></div>
+  <p>הטיפול הביודינמי לא מתמקד בשלב הזה בדרך כלל, אבל זיכרונות מהרחם עולים לפעמים מעצמם במהלך העיסוי. לפי המאמר, איך שהאם קיבלה את ההיריון, וטראומות שהיא עברה בזמן ההיריון, נשמרים בלא־מודע של הילד ומשפיעים על היחס שלו לחיים.</p>
+  <div class="grid2">
+    <div class="cell"><span class="eyebrow">הרעיון</span><p>ד"ר אלפרד טומטיס גילה שהעובר <b>שומע</b> את קול אמו (מסונן דרך המים), וזה המקום שבו מתחילה ההתפתחות הנפשית. העובר "שואב את כל החומר הרגשי שלו מקול אמו", ומהדיאלוג המתמיד הזה הוא מקבל ביטחון.</p></div>
+    <div class="cell"><span class="eyebrow">מה העובר עושה</span><p>מקשיב. "מושיט יד" לאם דרך ההקשבה, וצריך לפגוש אותה דרך הקול שלה.</p></div>
+    <div class="cell good"><span class="eyebrow">מה מרוויחים אם זה מצליח</span><p>תחושה שיש לי מקום מיוחד בעולם, ורצון לתקשר: קודם עם אמא, אחר כך עם אבא, אחר כך עם כולם. וגם: היכולת ללמוד שפה.</p></div>
+    <div class="cell bad"><span class="eyebrow">אם זה לא מצליח</span><p>לפי טומטיס, כישלון במפגש עם קול האם עלול להוביל לאוטיזם. הוא פיתח טיפולים בצליל לאוטיזם ולקשיי דיבור.</p></div>
+  </div>
+  <div class="ex ai"><p>אימהות רבות מספרות שתינוק שזה עתה נולד נרגע כששומע את הקול שלהן, אבל לא כששומע קול זר. לפי טומטיס, זה בגלל שהקול הזה כבר "מוכר" לו תשעה חודשים.</p></div>
+</div>
+
+<!-- ============ OCULAR ============ -->
+<div class="phase" id="p2">
+  <div class="phase-head"><h3>2. העיניים (השלב האוקולרי)</h3><span class="chip blue">מהלידה, במקביל לשלב הפה</span><span class="chip">מרכז: הראש והעיניים</span></div>
+  <p>התינוק שנולד צריך לוודא שהקשר שהתחיל ברחם ממשיך. הוא צריך שאמא תראה אותו ותקבל אותו, והאנרגיה שלו "מתוכנתת" לחפש <b>קשר עין</b>. בלידה האנרגיה מרוכזת בראש ויוצאת החוצה דרך העיניים: לראות, להיראות, ולהתקבל באהבה.</p>
+  <div class="grid2">
+    <div class="cell"><span class="eyebrow">מה רואים</span><ul>
+      <li>מונה ליזה בויסן: בתשעת החודשים הראשונים התינוק נמצא ב"טראנס": האישונים מורחבים עד הקצה, והמבט כל כך עמוק ש"מי שפגש אותו עלול להרגיש מוצף".</li>
+      <li>אלסוורת' בייקר: השלב הזה חשוב לפיתוח ראייה בשתי עיניים (עומק). בלי זה יש פער בין מה שרואים למה שמרגישים, וזה לדעתו חלק מההסבר לאשליות בסכיזופרניה.</li>
+    </ul></div>
+    <div class="cell"><span class="eyebrow">הבחנה חשובה</span><p>יש שני "חיפושים דרך העיניים": הראשון, עכשיו, כשהתינוק עוד לא יודע שהוא אדם נפרד ומרגיש שהעולם הוא המשך שלו. השני, בגיל 4, כשילד שכבר יודע מי הוא מחפש אהבה דרך העיניים. המאמר מדבר כאן רק על הראשון.</p></div>
+    <div class="cell good"><span class="eyebrow">מה מרוויחים אם זה מצליח</span><p>כשעיניים חמות ומקבלות פוגשות אותו, האנרגיה המחפשת "נמסה" לזרימה נעימה. התינוק רגוע ומקבל תחושה פנימית: <b>"הכול בסדר איתי, אני בסדר!"</b></p></div>
+    <div class="cell bad"><span class="eyebrow">אם זה לא מצליח</span><p>אם אמא לא מקבלת את התינוק, התינוק לא יכול לקבל את עצמו. התוצאה: תחושה עמוקה של <b>חוסר ערך, בלבול וייאוש</b>.</p></div>
+  </div>
+  <div class="ex src"><p>אימהות שהחזירו בשקט לתינוק את המבט שלו זוכרות את זה כחוויה חשובה מאוד ליחסים ביניהם.</p></div>
+  <div class="ex ai"><p>מבוגר שמתקשה להסתכל לאנשים בעיניים, או שמרגיש "שקוף" בחברה, יכול לפי המודל הזה לשאת משהו משלב העיניים שלא הושלם.</p></div>
+</div>
+
+<!-- ============ ORAL ============ -->
+<div class="phase" id="p3">
+  <div class="phase-head"><h3>3. הפה (השלב האורלי)</h3><span class="chip red">מיד אחרי הלידה</span><span class="chip">מרכז: הראש, דרך הפה, ומשם למטה לאגן</span></div>
+  <p>האנרגיה עדיין מרוכזת בראש, ועכשיו מחפשת מגע גם דרך הפה. בגיל הזה אין עדיין שליטה רצונית בשרירים, ולכן האנרגיה זורמת די חופשי בכל הגוף, מוגבלת בעיקר על ידי העור. המטרה הסמויה של השלב: <b>להביא את האנרגיה מהראש למטה, עד תחתית האגן</b>, כדי שהילד יוכל "להשתרש" באדמה. זה מה שיאפשר את השלב הבא.</p>
+
+  <h4>איך התינוק "מחובר לאדמה" לפני שהוא יכול לעמוד</h4>
+  <div class="tbl"><table>
+  <thead><tr><th>מצב</th><th>דרך החיבור</th></tr></thead>
+  <tbody>
+  <tr><td class="k">ברחם</td><td>דרך גוף האם, בחבל הטבור. דופן הרחם "מכיל" אותו.</td></tr>
+  <tr><td class="k">תינוק</td><td>חבל הטבור נחתך, אבל התינוק עדיין לא מסוגל להתחבר לבד. הוא נשאר "מחובר" דרך גוף האם: דרך המגע שלה על העור שלו. "התינוק מארק את עצמו דרך האהבה של מי שנותן לו אהבה... אהבה שאפשר להעביר רק דרך מגע והחזקה" (מונה ליזה בויסן).</td></tr>
+  <tr><td class="k">מבוגר</td><td>מחובר בעצמו לאדמה דרך הרגליים ובסיס עמוד השדרה. עומד על הרגליים שלו, גם במובן המילולי.</td></tr>
+  </tbody></table></div>
+  <p>דרך המגע של האם, האנרגיה נמשכת מהראש למטה, דרך העור, עד תחתית האגן, ושוב חזרה לראש. בזמן ההנקה הזרימה הזאת מתחזקת, ו<b>בכל פעם שהגל מגיע לתחתית האגן, "השורש" מתבסס קצת יותר</b>. זה מרגיש לתינוק הנאה גדולה.</p>
+  <div class="ex ai"><p>תינוק שמחזיקים אותו הרבה, עור אל עור, "מתיישב" בגוף שלו מהר יותר. תינוק שמשאירים אותו הרבה לבד בעריסה נשאר, לפי המודל, "בראש" ולא מצליח להוריד את האנרגיה למטה.</p></div>
+
+  <h4>למה דווקא דרך קדמת הגוף</h4>
+  <p>רייך צפה שאנרגיה שנעה בחלל פתוח מתקדמת בצורת גל מסתובב. בתוך גוף חי, הקרום החיצוני מסיט אותה ומכריח אותה לחזור אחורה, לכיוון "הזנב", ושם היא נלחצת הכי חזק. ג'ייקובוס מסיקה שני דברים: (1) ככה אולי נוצרים שני הקטבים של הגוף, השורש והכתר; (2) התינוק מושיט את האנרגיה שלו לאחר דרך <b>החזית</b> של גופו.</p>
+  <div class="ex src"><p>מבוגר שמשלים בטיפול את שלב הפה מרגיש הכי נוח כששוכב או ישן על הבטן. לפי המחברת, זה בגלל שהאנרגיה של השלב הזה יוצאת מקדמת הגוף.</p></div>
+
+  <h4>ההנקה כחוויה של אושר עצום</h4>
+  <div class="ex src"><p>"כשדוריאן שכב בזרועותיי ושתה, הוא השמיע את הקולות הכי מדהימים לאורך כל ההנקה. לרגעים עיניו התגלגלו ונעו למעלה כמו באקסטזה. זה לא היה רק חלב ששתה, אלא גם האהבה שנתתי לו. מן מהשמיים!... לפעמים הקולות היו כל כך גבוהים שהתביישתי קצת להניק בציבור. זה הרגיש אינטימי, כמו לחשוף את חיי האהבה שלנו" (מונה ליזה בויסן על בנה).</p></div>
+  <div class="ex src"><p>המחברת מספרת על עצמה: כשלושה חודשים אחרי תחילת הטיפול שלה, עלו לה מעצמם דימויים של שד גדול ודחף חזק לינוק. זה הבהיל אותה. בסוף החליטה "ללכת עם זה": בבוקר, במיטה, הצטנפה על צד שמאל, מצצה אגודל ונתנה לדימוי לבוא. היא הרגישה שהיא "כדור של הנאה" בלי ידיים ורגליים, עם זרם של עונג בין הפה לאיבר המין, ואז פיצוץ של עונג "עד קצות היקום". "אני והיקום היינו אחד. הייתי כל־יכולה ונמצאת בכל מקום." היא מאמינה שהחוויה השלימה משהו שהיה צריך להשלים כשהייתה תינוקת.</p></div>
+  <p>המסקנות שלה מהחוויה:</p>
+  <ul>
+    <li>העונג של ההנקה הוא עונג גופני מלא, והוא הבסיס לתחושת <b>הכל־יכולת</b> של תינוק מסופק ("אני גורם לכל מה שאני צריך להופיע").</li>
+    <li>תחושת היופי היא בעצם "להרגיש אהבה": כשהאנרגיה שלנו מתעוררת, אנחנו מרגישים יופי ומשליכים אותו על מה שאנחנו רואים.</li>
+    <li>אהבה היא חיבור בין שתי מערכות אנרגיה (אדם אחר, או הטבע, או "אלוהים"). האנרגיה הנוספת <b>לא</b> נלקחת מהאחר, שהרי גם הוא מתרחב, אלא מגיעה מנשימה עמוקה יותר, מחילוף חומרים מהיר יותר, ומהאוויר שסביבנו.</li>
+  </ul>
+
+  <h4>סיפור מטופל: הצעיר שחשבו שניסה להתאבד</h4>
+  <div class="ex src">
+  <p><b>הרקע.</b> צעיר רזה, אמו מתה כשהיה תינוק. אושפז אחרי התקף פסיכוטי. בבית החולים שתה נוזל צורב ששרף את פיו, וחשבו שניסה להתאבד. המבנה של הגוף שלו העיד על שלב פה שלא הושלם.</p>
+  <p><b>יום 1.</b> המחברת עבדה איתו שעה בלי הצלחה: לא הצליחה "להגיע" לאנרגיה שלו, הבטן נשארה שקטה. מנהלת הקליניקה (גרדה בויסן) טיפלה בו עוד שעתיים וחצי בערב, הצליחה ליצור חיבור, ו"רוקנה" לחץ שהצטבר ברקמות. הוא הרגיש הקלה.</p>
+  <p><b>ימים 2–3.</b> המשך ריקון. השתפר אחרי כל טיפול. כששאלה אותו אם רצה למות, אמר בכנות שלא: ראה כוס עם נוזל ענברי וחשב שמישהו השאיר לו אותה לשתות. <b>הוא שתה כדי להיזון, לא כדי להרוס את עצמו.</b> המחברת: "כמיהה לפה כל כך עזה, שהוא דמיין שמישהו טוב השאיר לו משקה בלי לומר מילה."</p>
+  <p><b>יום 4.</b> הרקמות נקיות, הבטן עובדת מעצמה. ועדיין: מרוחק, מדוכא, בלי שמחה, נשימה שטוחה.</p>
+  <p><b>מה היא עשתה.</b> ניסתה לדמות לו את המגע של תינוק בשד אמו: הוא שכב מכורבל על צד שמאל, כריות פוך רכות על החזה והבטן, כריות גדולות שהיא נשענה עליהן בגופה כדי שירגיש לחץ חם וקדימה. אמה השמאלית על האגן שלו, המרפק על העצה. כף יד ימין רכה על הפה הפצוע והאף, כך שנשם אוויר מעורב בנשימה שלו ובחום העור. החזיקה ככה לפחות עשר דקות.</p>
+  <p><b>מה קרה.</b> הנשימה שלו השתנתה: בלע אוויר דרך האף "כמו תגובה אוטומטית מהסרעפת", ואז נשם עמוק כמה פעמים. היא הרגישה שמתח עמוק נמס. כשחזרה, הוא נראה "חדש" ומופתע. "ראית משהו?! מה ראית?!" "ראיתי שנשמת." "כן... כן... נשמתי", בפליאה ובהקלה. העיניים שלו לא היו מזוגגות יותר, "והוא הסתכל עליי כאילו <i>אני</i> חדשה." המחברת: האנרגיה שלו מצאה, להפתעתו, את ההשלמה שרגש ישן מאוד היה זקוק לה.</p>
+  </div>
+
+  <h4>מה קורה בגוף ובמוח</h4>
+  <ul>
+    <li>בלידה כמעט הכול נשלט על ידי החלקים ה"אוטומטיים" של מערכת העצבים והמוח. בחודשים הבאים המוח "הגבוה" מתחיל לעבוד יותר.</li>
+    <li>בזמן הנקה בשנת חלומות (REM) יש האצה של חילוף החומרים במוח וגירוי של האזורים המיניים. מאמינים שזה עוזר למוח לגדול. עד גיל 3 חודשים חצי מהשינה היא ב"טראנס עמוק"; עד 9 חודשים התינוק מגיע ל"קצב של מבוגר".</li>
+  </ul>
+
+  <div class="grid2">
+    <div class="cell"><span class="eyebrow">התגובה שהתינוק צריך לקבל</span><p>"אני רואה אותך. אני שמח שבאת. אני רוצה אותך. אני מחזיק אותך. אני מאכיל אותך ושומר עליך. אני כאן בשבילך, כדי שתוכל להתחבר אליי."</p></div>
+    <div class="cell"><span class="eyebrow">ממי</span><p>אמא (או מבוגר שמחזיק ומקבל). המגע והנוכחות שלה מושכים את האנרגיה מהראש למטה ומארקים אותה. "השדה" של המבוגר עוטף את התינוק ונותן לו מקום בטוח להתרחב, להסתכן ולגדול.</p></div>
+    <div class="cell good"><span class="eyebrow">מה מרוויחים אם זה מצליח</span><p><b>אופטימיות ואמון בחיים.</b> אדם כזה מצפה שהחיים יהיו נדיבים אליו.</p></div>
+    <div class="cell bad"><span class="eyebrow">אם זה לא מצליח</span><p>לא משנה כמה האם אוהבת: אם האהבה לא עוברת דרך מגע והנקה סבלנית, התינוק לא יכול להתחבר אליה. האנרגיה, שאמורה לזרום בין הראש לאגן, <b>מתפצלת</b>: חלק יוצר מעגל סגור ומנותק בראש (המאמר קורא לזה "זרימה סכיזואידית"), והחלק השני <b>קופא</b> בתחתית האגן ובמעיים. התינוק מרגיש חסר אונים וחסר ערך. במבוגרים זה נראה לעיתים כעצם חזה שקועה.</p></div>
+  </div>
+  <div class="ex ai"><p>מבוגר שחי "בראש": חושב הרבה, מנתח הכול, אבל מרגיש מנותק מהגוף ומתקשה להרגיש רעב או עייפות. ובאותו זמן: בטן תפוסה, עצירות, קושי "להרפות". לפי המודל זה בדיוק הפיצול: אנרגיה למעלה בראש, קיפאון למטה באגן.</p></div>
+</div>
+
+<!-- ============ ANAL ============ -->
+<div class="phase" id="p4">
+  <div class="phase-head"><h3>4. פי הטבעת (השלב האנאלי)</h3><span class="chip">מתבסס עד גיל שנה וחצי</span><span class="chip">מרכז: פי הטבעת, בסיס עמוד השדרה, הרגליים</span></div>
+  <p>כל פעם שהגל של שלב הפה הגיע לתחתית האגן, "השורש" התחזק. עכשיו הוא הופך למרכז של שלב חדש. בשלב הזה הילד לומד להחליף אנרגיה עם <b>האדמה</b>. אנרגיית האדמה, לפי המאמר, היא כוח גולמי שבצורתו הרגשית הראשונית מרגיש כ<b>כעס וזעם</b>: כוח מתפרץ שאפשר לאלף ולהפוך ליצירתיות. בצורתו הקיצונית זה הכוח העל־אנושי של הורה שמרים מכונית כדי להציל ילד. זה המקור של עצמאות, כוח, חיוניות ואומץ.</p>
+  <div class="grid2">
+    <div class="cell"><span class="eyebrow">שתי משימות (שהולכות ביחד)</span><ol>
+      <li><b>חיבור ישיר ועצמאי לאדמה.</b> הילד "נותן" לאדמה את הפסולת שלו ומקבל ממנה אנרגיה חדשה. (המאמר משווה: כמו שכל יצור אמור להחזיר לאדמה צואה תמורת האוכל שהיא נותנת. בחברות חקלאיות יודעים את זה, בעיר שכחו.) האנרגיה זורמת לרגליים, מחזקת ומעצבת את השרירים, ודרך כפות הרגליים הפעוט מתחבר לאדמה בעצמו.</li>
+      <li><b>להיות אדם נפרד.</b> לסיים את ה"אנחנו" עם אמא ולהתחיל "אני".</li>
+    </ol></div>
+    <div class="cell"><span class="eyebrow">מה הילד רוצה להשיג</span><ol>
+      <li>חיבור קבוע לאדמה. האדמה תמיד מקבלת ותמיד מחזירה. <b>אבל</b> כדי לשמור על החיבור לאדמה הילד צריך את האישור המתמשך של אמא. האדמה לא יכולה לאכזב; ההורה כן יכול לחסום.</li>
+      <li>להיפרד מאמא בלי לאבד את אהבתה. להיות אהוב <b>כאדם עצמאי</b>.</li>
+    </ol></div>
+    <div class="cell"><span class="eyebrow">מה הילד עושה</span><p>נותן את הצואה שלו, במודע ובהנאה, ורוצה לחלוק את הגאווה על "הייצור" עם מי שהוא אוהב. הילד צריך להרגיש שהוא שולט: הוא נותן כשהוא בוחר. זה נותן תחושת כוח.</p></div>
+    <div class="cell"><span class="eyebrow">ממי</span><p>אמא. (האדמה היא המקור האמיתי של הכוח, אבל הילד לא מודע לזה. הוא מרגיש שהכוח שלו קשור לייצור הצואה, כאילו הוא עצמו המקור. מרגרט מאהלר: פעוטות בשיא השלב "נמצאים בשיא האמונה שהם כל־יכולים".)</p></div>
+  </div>
+  <div class="ex src"><p>המשפט התמים של אמא "תעשי קקי בשביל אמא" עלול להפריע לזכות של הילדה להיות אחראית על ה"תוצר" שלה, ולהיתקל בהתנגדות עקשנית.</p></div>
+  <div class="ex src"><p>ילדה חכמה אחת עשתה שלוש ערימות נפרדות בשלושה סירים נפרדים באותה ישיבה, הישג של ממש. אמא שלה נזפה על העבודה הנוספת, אבל לא גינתה את הילדה.</p></div>
+
+  <h4>איך המפגש נראה</h4>
+  <p>הילד דוחה יותר ויותר את ה"ביחד" עם אמא, <b>אבל לא את אמא עצמה</b>. הוא צריך שהיא תמשיך לאהוב אותו, <b>וגם</b> צריך לדחות את הסמכות שלה. "לא!" ו"אני לא רוצה!" לכל מה שהיא רוצה. הרגשות שלו סותרים:</p>
+  <blockquote><p>"לא, אני לא רוצה שאת תהיי אני. אבל בבקשה, אל תעזבי אותי!"</p></blockquote>
+  <p>ה"לא" לאמא הוא "כן" לכוח ולעצמאות שלו.</p>
+  <div class="ex ai"><p>פעוט בן שנה וחצי שצועק "לא!" על הכול, גם על דברים שהוא בעצם רוצה. לפי המאמר הוא לא באמת מתנגד לגרביים; הוא מתאמן בלהיות אדם נפרד.</p></div>
+
+  <div class="grid2">
+    <div class="cell good"><span class="eyebrow">מה מרוויחים אם זה מצליח</span><ul>
+      <li>תחושה של כוח אישי ועצמאות.</li>
+      <li><b>שליטה עצמית.</b> הסוגר של פי הטבעת הוא השריר הראשון שהילד שולט בו ברצון, והוא נמצא בקצה המעיים, שהם לפי הביודינמיקה "המושב של אינסטינקט ההישרדות". כשהילד שולט בסוגר, הראש לומד לשלוט ברגשות: אפשר לדחות עונג בשביל מטרה.</li>
+      <li>המוח הקדמי (ההיגיון) עובד קשה: תיאום תנועה, הבנה של "אם... אז". <b>החשיבה ההגיונית</b> מתחילה.</li>
+      <li>תחושה של "אני נפרד": <b>ה"אני" (האגו)</b> נולד.</li>
+      <li>עד גיל שנה וחצי: הליכה עצמאית. זה שיא השלב ותחילת השלב הבא.</li>
+    </ul></div>
+    <div class="cell bad"><span class="eyebrow">אם זה לא מצליח</span><ul>
+      <li>אם אמא דוחה לגמרי את העצמאות והכוח של הילד, הוא חייב להתפשר: הוא <b>עוצר את הזעם על ידי הידוק הסוגר</b>, <b>מותח את שרירי הרגליים</b> כדי לחסום את האנרגיה שנותנת לו כוח למחות, ונהיה צייתן כלפי חוץ.</li>
+      <li>מתחת לציות מסתתר <b>זעם עצום</b>. המאמץ לרסן אותו יכול להוביל להתנהגות כפייתית (סדר, ניקיון, בדיקות), ולפעמים לפגיעה עצמית ולמחשבות אובדניות.</li>
+      <li>או שהזעם פונה החוצה: ילד שמתעלל בחיות או בילדים חלשים ממנו, ומבוגר שמחפש דרכים ערמומיות "להחזיר" למי שזמין.</li>
+      <li>בדרך כלל אמא היא ההורה שמשתק בשלב הזה, אבל זה יכול להיות גם אבא רודן שאמא נכנעת לו.</li>
+    </ul></div>
+  </div>
+  <div class="ex ai"><p>מבוגר מאוד מנומס, מסודר ומאופק, שמתפרץ פעם בכמה חודשים בזעם לא פרופורציונלי על דבר קטן, ואז מתבייש נורא. לפי המודל: שלב אנאלי שבו הכעס נאסר, והוא "מוחזק" כל הזמן בשרירים עד שמשהו פורץ.</p></div>
+</div>
+
+<!-- ============ PHALLIC ============ -->
+<div class="phase" id="p5">
+  <div class="phase-head"><h3>5. השלב הפאלי / קליטורלי</h3><span class="chip red">מגיל שנה וחצי עד סוף גיל 4</span><span class="chip">מרכז: עצם העצה, שרירי הגב, איבר המין החיצוני</span></div>
+  <p>האנרגיה שעולה מהאדמה דרך הרגליים נאגרת באגן האחורי (עצם העצה), ומשם זורמת בשני כיוונים: <b>למעלה לשרירי הגב, וקדימה לאיבר המין החיצוני</b> (פין או דגדגן). האופי של השלב "גברי" (תוקף, כוח), ולכן הוא נקרא בדרך כלל "פאלי". השלב האנאלי והחלק הראשון של השלב הזה הם בעצם תהליך אחד של בניית ה"אני": האנאלי בונה אותו בשקט, בדרך של סירוב; הפאלי בונה אותו בקול, בדרך של תביעה.</p>
+
+  <div class="tbl"><table>
+  <thead><tr><th></th><th>כיוון 1: למעלה בגב</th><th>כיוון 2: קדימה לאיבר המין</th></tr></thead>
+  <tbody>
+  <tr><td class="k">המטרה</td><td>לבנות את <b>ה"אני"</b> (זהות אגו)</td><td>לבנות את <b>הזהות המגדרית</b> ("אני בן / אני בת")</td></tr>
+  <tr><td class="k">מתי</td><td>מבוסס עד גיל 3</td><td>עד סוף גיל 4</td></tr>
+  <tr><td class="k">בשביל מה</td><td>הישרדות הפרט</td><td>הישרדות המין האנושי (רבייה)</td></tr>
+  <tr><td class="k">הצורך</td><td>"לראות את עצמו". האנרגיה היא כוח גולמי שמרגיש את עצמו אבל לא יודע איפה הוא נגמר. הוא יכול לדעת זאת רק כשהוא נתקל ב<b>גבול</b> של מישהו אחר.</td><td>לדעת מה המגדר שלו ולהטמיע תמונה שלו בתוך ה"אני".</td></tr>
+  <tr><td class="k">מה הילד עושה</td><td><b>מאתגר</b>. בודק את ההורים, לפעמים "בלי רחמים", עד שהם מציבים גבול ברור.</td><td>מזדהה עם ההורה <b>בן אותו המין</b> ומעריץ אותו, כמו תמונה בוגרת של עצמו.</td></tr>
+  <tr><td class="k">ממי</td><td>שני ההורים, עם גבולות ברורים ונכונות להגיב בחביבות אבל בתקיפות. הקשר עם אבא עוזר להשתחרר מה"ביחד" עם אמא.</td><td>ההורה בן אותו המין. ההורה השני אמור לתמוך בזה, או לפחות לא להפריע.</td></tr>
+  <tr><td class="k">אם זה נכשל</td><td>ראו טבלת ארבע התוצאות למטה.</td><td>אם ההורה בן אותו המין לא זמין, רואה בהערצה משהו לא ראוי, או מנצל אותה מינית, החלק הזה נשאר פתוח או פצוע. (המחברת: זהות מגדרית ברובה נלמדת, לא מולדת.)</td></tr>
+  </tbody></table></div>
+  <div class="ex src"><p>גרדה בויסן סיפרה על ילדה בת שנתיים שסירבה לחלב וצרחה שהיא רוצה קוקה־קולה. כשההורים המותשים סוף־סוף נכנעו ונתנו לה קולה, היא סירבה לקולה ורצתה חלב! הנקודה לא הייתה המשקה. הנקודה הייתה לבדוק מי קובע.</p></div>
+
+  <h4>התקף הזעם: הדרך של הילד "לכבוש" את הגוף שלו</h4>
+  <p>המרחב הראשון שהילד תובע בכוח הוא הגוף שלו עצמו. ה"אימון" לזה הוא <b>התקף הזעם</b>: הילד משליך את עצמו על הגב, מקמר אותו, מנפנף בידיים וברגליים וצורח "לא!" "אני לא רוצה!" או סתם צורח. הגב, הישבן, הצוואר והראש כולם משתתפים. <b>אם ההורה נשאר רגוע ונותן לגל להגיע לסופו, בלי לעזוב את הילד</b>, הגל שוכך לבד: הצרחות הופכות ליללות, ואז לשקט, והילד נשאר עם גוף מלא אנרגיה ומוכן להמשיך בשמחה. המסקנה של המאמר: <b>ילדים צריכים לקבל רשות להתקפי זעם.</b> איסור על התקפי זעם = שלילת הזכות של הילד לתפוס את המרחב שלו.</p>
+  <div class="ex ai"><p>ילדה בת שנתיים וחצי בסופרמרקט נשכבת על הרצפה וצורחת כי לא קיבלה ממתק. ההורה שיושב לידה בשקט, לא נכנע ולא עוזב, ומחכה שהסערה תעבור, עושה לפי המודל את הדבר הנכון: מציב גבול (אין ממתק) ונשאר (אני לא עוזב אותך). ההורה שצועק בחזרה, או שבורח מהמקום, משאיר את הגל באמצע.</p></div>
+  <p>המחברת משערת שגם "התקף הזעם בעמידה" של ילד גדול יותר, רקיעה ברגליים כשמשהו חוסם אותו, הוא דרך להשלים את המעגל עם האדמה. הגבול של ההורה "מחזיר" לילד את הכוח שלו, והכוח החוזר מוארק דרך הרגליים.</p>
+  <p>בתחילת השלב הילד אומר "לא, אני לא רוצה (אותך)!" (הגדרה של עצמי דרך שלילה). במהלך השנה השלישית, סביב גיל שנתיים, ההצהרה הופכת חיובית: "אני רוצה!" "אני אעשה!" הילד צריך ששני ההורים יראו את הכישורים החדשים שלו, ישמחו בהם ויאשרו את הכוח והעצמאות שלו.</p>
+
+  <h4>שני תנאים, וארבע תוצאות אפשריות</h4>
+  <p>המגע שהילד מחפש כאן הוא <b>הפוך מהתמזגות</b>: הוא לא רוצה להיבלע בהורים, הוא רוצה "להיתקל" בגבול שלהם ולהרגיש אותו. הוא צריך שהם ידעו שהוא נגע בהם, כלומר שיגיבו. התגובה מחזירה לו את האנרגיה עם מידע: "מה אני". המידע הזה בונה את ה"אני".</p>
+  <ol>
+    <li>ההורים חייבים <b>לקלוט</b> את האנרגיה של הילד ולהחזיר תגובה, כדי שהילד יוכל להאריק אותה.</li>
+    <li>התגובה חייבת <b>להתאים</b> למה שהילד יודע על עצמו מבפנים.</li>
+  </ol>
+  <div class="tbl"><table>
+  <thead><tr><th>מה ההורים עושים</th><th>מה עלול לצאת</th></tr></thead>
+  <tbody>
+  <tr><td class="k">(א) לא קולטים ולא מחזירים כלום</td><td>הילד נשאר "באוויר", בלי הארקה. עלול להתפתח אופי <b>חשדני ולא מאורק</b> (פרנואידי).</td></tr>
+  <tr><td class="k">(ב) מחזירים תגובה, אבל הגבולות משתנים כל יום</td><td>אופי <b>מאורק אבל חשדני</b>.</td></tr>
+  <tr><td class="k">(ג) אוסרים לגמרי על כל ביטוי של כוח</td><td>הילד נסוג ל<b>עמדה אנאלית פסיבית</b>: שותק, מתכנס, מתנגד בשקט.</td></tr>
+  <tr><td class="k">(ד) התגובה לא מתאימה למה שהילד יודע על עצמו ("את ילדה רעה!")</td><td>אופי <b>תוקפני ונוקם</b>, או נסיגה ל<b>עקשנות אנאלית</b>.</td></tr>
+  </tbody></table></div>
+  <div class="ex ai"><p>(ב) ילד שאצלו "לא" של יום ראשון הוא "כן" של יום שני, לפי מצב הרוח של ההורה. הוא לומד שיש גבולות, אבל לא יכול לסמוך עליהם, ולכן גדל כאדם שתמיד בודק מה האחר "באמת" מתכוון.</p></div>
+
+  <h4>הגב כמרכז של "רצון"</h4>
+  <p>הגל שעולה בגב בונה לא רק שרירים אלא גם את מרכזי האנרגיה שבגב, שבספרות על צ'אקרות נקראים <b>מרכזי רצון</b>: בעצם העצה, באמצע הגב, ובין השכמות. לכל מרכז אחורי יש מרכז קדמי מקביל (האגן הקדמי, מקלעת השמש, הלב). המאמר: המרכז האחורי של האגן קשור ל<b>כמות</b> האנרגיה המינית ולחיוניות, והקדמי ל<b>איכות</b>: היכולת לתת ולקבל הנאה.</p>
+
+  <h4>אהבה בסגנון פאלי</h4>
+  <p>האנרגיה הפאלית רוצה לחקור את האחר בלי לאבד את עצמה. היא <b>לא</b> רוצה להתמזג. אם אהבה היא תקשורת, אז האנרגיה הפאלית רוצה לאהוב, אבל התקשורת שלה היא <b>דרישה</b> ("תקבלו אותי כחזק ועצמאי!") ולא <b>הצעה</b> ("אני מקבל אותך"). האהבה עדיין מופנית לעצמה.</p>
+  <p>לבנות קל יותר בשלב הזה: אמא, שילדה והאכילה אותן, היא גם המודל למה שיהיו. הבן צריך להשלים עם זה שלעולם לא יהיה כמו אמא. הוא "מעין זר" שצריך להגדיר את עצמו מחדש, וזקוק לאבא או לגבר קרוב אחר. בגלל האתגר הנוסף, בנים נאבקים יותר, ומפתחים את התכונות הפאליות ביתר עוצמה ונאחזים בהן יותר.</p>
+
+  <div class="grid2">
+    <div class="cell good"><span class="eyebrow">מה מרוויחים אם זה מצליח</span><p><b>תכונות:</b> אסרטיביות, אומץ, גאווה, תחושת כוח, הערכה עצמית, תשוקה, זהות נפרדת, "אני" חזק. <b>גוף:</b> שרירים חזקים ומלאים ברגליים, בישבן, בגב ובזרועות (במיוחד הטריצפס). פעילות גופנית ושכלית ("מוח שמאל"), ופנטזיות שבהן הילד הוא הגיבור.</p></div>
+    <div class="cell bad"><span class="eyebrow">אם זה נכשל</span><p>חשדנות, נסיגה לשתיקה פסיבית־תוקפנית, או אופי נוקם. "בכל מקרה, השינוי נראה כאילו קורה בן לילה!" המאמר מוסיף: מבוגר שרק המרכז האחורי שלו פעיל (כמות) בלי הקדמי (איכות) יכול להיות תוקפני מינית בלי להתחשב בבן הזוג.</p></div>
+  </div>
+</div>
+
+<!-- ============ GENITAL-HEART ============ -->
+<div class="phase" id="p6">
+  <div class="phase-head"><h3>6. הלב ואיבר המין (השלב הגניטלי־לב)</h3><span class="chip gold">השנה החמישית (גיל 4)</span><span class="chip">מרכז: המרכזים הקדמיים: אגן, בטן, לב, מצח</span></div>
+  <p>כשהשלב הפאלי הושלם, נפתח השלב הזה. זה <b>הגשר</b>: עד עכשיו האנרגיה חיפשה אנשים, מכאן והלאה היא תחפש גם משהו גדול יותר. בשלב הקודם האנרגיה נבנתה בגב. עכשיו היא דוחפת קדימה, אל המרכזים שבחזית הגוף, "כדי להוסיף עוד תכונות להרכב המורכב שהוא אישיות".</p>
+
+  <h4>לאיבר המין שני חלקים</h4>
+  <p>המאמר אומר שהפין הוא רק חלק אחד מאיבר המין הגברי. אצל נשים ברור שיש שני חלקים, הדגדגן והנרתיק, עם שתי איכויות שונות של אנרגיה. המחברת מציעה (בעקבות גרדה בויסן, שהצביעה על הפרינאום, האזור שבין איבר המין לפי הטבעת, כאזור ארוטי חשוב) שגם לגבר יש חלק "פנימי" שמקביל לנרתיק. היא קוראת להם <b>"הפין החיצוני" ו"הפין הפנימי"</b>.</p>
+  <div class="ex src"><p>בכנס בוונקובר ב־1988 מטפלים גברים שעברו שנים של טיפול גופני (ביואנרגטיקה) סיפרו שבמשגל הם מרגישים את הפין "כאילו הוא נמשך עמוק לתוך הגוף עד הלב". לפני הטיפול הרגישו רק את החלק החיצוני.</p></div>
+
+  <div class="tbl"><table>
+  <thead><tr><th>מרכז (צ'אקרה)</th><th>איפה</th><th>תפקיד בשלב הזה</th></tr></thead>
+  <tbody>
+  <tr><td class="k">2 קדמי (אגן)</td><td>מעל עצם החיק</td><td>היכולת לתת ולקבל הנאה מינית. (המקביל האחורי, בעצה, אחראי על הכמות והחיוניות.)</td></tr>
+  <tr><td class="k">3 (בטן עליונה)</td><td>מקלעת השמש</td><td>גשר בין האגן ללב. לפי ברברה ברנן: "ההנאה הגדולה שבידיעה של המקום הייחודי שלי ביקום". המחברת מקשרת: המשימה של השלב היא שהילד ימצא את מקומו במשולש אמא–אבא–ילד.</td></tr>
+  <tr><td class="k">4 (הלב)</td><td>בחזה, בין הפטמות</td><td>מושב האהבה הנותנת (אלטרואיסטית). הלב התפתח כבר בשלב הפה; עכשיו ההתפתחות ה"בולטת" השנייה שלו. בשלב הזה הלב מחבר את אנרגיית האדמה (מלמטה) עם האנרגיה ה"קוסמית" (מלמעלה).</td></tr>
+  <tr><td class="k">6 (המצח, "העין השלישית")</td><td>בין הגבות</td><td>מושב האינטואיציה: ידיעה בלי להבין איך יודעים.</td></tr>
+  </tbody></table></div>
+
+  <div class="grid2">
+    <div class="cell"><span class="eyebrow">משימה 1 (אנרגטית)</span><p>לחבר את אהבת הלב (לדאוג לאחר) עם ההנאה הגופנית (תשוקה) <b>לזרימה אחת</b>. פרויד הבחין בין "הזרם החיבתי" ל"זרם החושני" ואמר שבלי חיבור ביניהם אין אהבה בוגרת תקינה. לפי המודל: החיבתי בלב, החושני באגן.</p></div>
+    <div class="cell"><span class="eyebrow">משימה 2 (נפשית)</span><p>בשלב הקודם הילד בנה בתוכו תמונה של "איך נראה מבוגר מהמין שלי". עכשיו הוא צריך תמונה של <b>המין השני</b>, ואז לחבר את שתי התמונות ל<b>תמונה של זוג אוהב</b>. זה "אדיפוס בריא" (הרעיון של אבה בויסן). אם ההורים לא מספקים תמונה של זוג אוהב, הילד "פותר" את זה על ידי כך שהוא שם את עצמו במקום ההורה בן מינו ומדמיין זוגיות עם ההורה השני. זה לא עובד, והוא נשאר תקוע בקונפליקט.</p></div>
+    <div class="cell"><span class="eyebrow">ממי</span><p>מ<b>ההורה בן המין השני</b>: שיראה אותו, יקבל אותו ויאשר אותו. אבל המטרה <b>אינה</b> מגע מיני (זה יבוא רק בגיל ההתבגרות). הקשר כאן הוא <b>משולש</b>: הבן צריך שאמא תשמח ב"גבריות האוהבת" שלו בלי לנצל אותה, ובאותו זמן צריך את הדוגמה והעידוד של אבא. הבת, בהתאמה.</p></div>
+    <div class="cell"><span class="eyebrow">מה הילד עושה</span><p>מבטא אהבה: רוצה לטפל, לתת, להיות קרוב. כשהוא מרגיש אהבה בלב, גם הגוף מתעורר, וזה נראה בתנועות, במבטים ובחיוכים. הוא "מראה מי הוא", קודם להורה בן מינו ואחר כך להורה השני, וצריך ששניהם יקבלו את כל זה. פרויד ראה בזה "פיתוי"; המחברת חולקת. לדעתה הילד אומר: <b>"הייתי רוצה שתשמחו שיש לי רגשות כאלה נעימים. אני בסדר?"</b></p></div>
+    <div class="cell bad"><span class="eyebrow">אם התשובה "לא"</span><p><b>בושה.</b> התחושה "משהו בי, בעצם מה שאני, לא בסדר". זו התחושה האופיינית לשלב הזה. (בשלב הפה אותה תחושה מופיעה כ<b>ייאוש</b>.)</p></div>
+    <div class="cell"><span class="eyebrow">איך המפגש נראה</span><p>בלי מגע: מבטים, מילים, מחוות, חיוכים. הילד קולט דרך העיניים והאוזניים. כשההורה מקבל, זה מאשר לילד את החיבור בין הלב לגוף. בכל פעם שהילד מרגיש שראו אותו, האנרגיה שלו גואה וממלאת את כל המרכזים, וזה גם מה שמפתח את המצח (האינטואיציה).</p></div>
+  </div>
+  <div class="ex ai"><p>ילדה בת 4 אומרת לאבא "אני אתחתן איתך כשאהיה גדולה" ומביאה לו פרח. אבא שאומר "איזה יופי, אני כל כך שמח שאת אוהבת ככה!" ומחייך לאמא, נותן את התגובה שהמאמר מתאר. אבא שמתבייש, או שצוחק עליה, או שאומר "אל תדברי שטויות", נותן "לא".</p></div>
+  <div class="ex src"><p>הערה במאמר: הנסיכה דיאנה נראתה כמי שעדיין מחפשת בעיניה את התגובה של השלב הזה. בתמונות שלה יש "מבט של שלב לב פעיל שלא סופק", וזה, לדעת המחברת, חלק ממה שרבים מצאו כל כך מושך בה.</p></div>
+
+  <h4>למה הילד נוטש את השלב הזה בעצמו</h4>
+  <p>כשהחיבור בין לב לגוף מצליח, התחושה היא כל כך גדולה שהיא <b>ממיסה את הגבול של ה"אני"</b> שהילד רק עכשיו סיים לבנות בעמל רב. הילד חווה את זה כאובדן של עצמו, וזה מבלבל ומפחיד. לכן, זמן קצר אחרי שהשלב מגיע לשיאו, הילד <b>דוחה ונוטש אותו</b>, וחוזר לפעול בעיקר דרך הכוח והעשייה של השלב הקודם. זו תחילת <b>תקופת השקט</b> (פרויד: לטנטיות): הילד מפסיק לחפש אהבה מינית אצל אנשים, עד גיל ההתבגרות. (אם השלב סופק, יכולת האהבה והדאגה לאחר נשארת חזקה.)</p>
+  <div class="ex src"><p>המחברת מספרת: בטיפול חזרה לזיכרון מגיל 4. היא הולכת עם אבא בין עצי שיטה פורחים (אביב). מבקשת שירים אותה. בזרועו היא מרגישה את החום שלו ואת ריח העור שלו, "יפה עד שכרות". היא מרגישה שהיא נמסה ומתמזגת בו, נבהלת, מתקשחת וחוזרת למציאות. מאז נמנעה מלהיות כל כך פתוחה איתו. היא מדמיינת שמבחינת אבא "הילדה עשתה תפנית פתאומית ובלתי מוסברת, ומאז היחסים שלה איתי לא היו כפי שהיו". בגיל ההתבגרות אותה תחושה, לנשום אוויר חם מעור של מישהו, הייתה "טעימה ומסוכנת" במקום מפחידה.</p></div>
+
+  <div class="grid2">
+    <div class="cell good"><span class="eyebrow">מה מרוויחים אם זה מצליח</span><p><b>תכונות:</b> אהבה נותנת, אהבה מינית, הדחף לטפל באחרים. <b>הילד:</b> חם, אוהב, ספונטני, מלא אנרגיה, בטוח בגופו ובזהותו. השכל מפותח ומקבל כל הזמן "רמזים" מהאינטואיציה. הילד מרגיש שייך לעולם הרחב ומוכן לבנות תמונה של עצמו בתוכו.</p></div>
+    <div class="cell"><span class="eyebrow">אזהרה במאמר</span><p>המיניות של ילד בגיל הזה עדיין מופנית לעצמו ורחוקה מבשלות. ילד שמפתים אותו לפעילות מינית, הגבולות שלו נפרצים קשות. המחברת משערת שהחשדנות של רייך בסוף חייו העידה על פריצת גבול כזאת בילדותו, גם אם לא זכר זאת (והוא עצמו תמך בפעילות מינית בין ילדים).</p></div>
+  </div>
+</div>
+
+<!-- ============ THIRD EYE ============ -->
+<div class="phase" id="p7">
+  <div class="phase-head"><h3>7. העין השלישית (המצח)</h3><span class="chip blue">מגיל 6 עד סוף גיל 8</span><span class="chip">מרכז: המצח; החלק "הרוחני" של הנפש</span></div>
+  <p>עכשיו האנרגיה מחפשת <b>קשר מודע עם דברים גדולים מהילד</b>: החברה, כדור הארץ, היקום. לפי המאמר, בשלב הקודם הלב חיבר את האנרגיה של האדמה (מלמטה) ואת האנרגיה ה"קוסמית" (מלמעלה) ופתח את המצח. עכשיו המצח מחבר את הגוף, את החושים ואת השכל עם מה שהמחברת קוראת לו "המערכת הרוחנית": החלק בנפש שמחובר ישירות למשהו גדול יותר. הילד יכול עכשיו להרגיש גם "אני נפרד" וגם "אני חלק ממשהו".</p>
+  <div class="note"><p><b>איך זה עובד עם ה"אני":</b> בשלבים האנאלי והפאלי הילד בנה חומה: ה"אני". בשלב הלב החומה נעשית חדירה למחצה: הילד יכול להתחבר למשהו גדול יותר בלי לאבד את עצמו. ברגעים שבהם הלב גואה, החומה נפתחת לגמרי והתחושה של "אני נפרד" נעלמת לרגע.</p></div>
+  <p>הדבר הגדול הראשון שהילד פוגש ממש הוא <b>החברה</b>: בית הספר, חברים. אילו החברה הייתה מודעת לצד הרוחני של החיים, הייתה תומכת בהתפתחות הזאת. "אך אבוי, בדרך כלל זה לא המקרה ב'תרבות המערבית', שנשלטת על ידי ערכים של כוח ועשייה (פאליים)."</p>
+  <div class="grid2">
+    <div class="cell"><span class="eyebrow">המשימה</span><p>לבנות תמונה כוללת של איך העולם עובד ומה מקומי בו, ולבדוק אותה מול החברה. לשנות התנהגות ומושגים לפי התגובות.</p></div>
+    <div class="cell"><span class="eyebrow">ממי</span><p>מהחברה הרחבה, שאמורה להדריך את הילד למצוא את ה"עצמי הרוחני" שלו.</p></div>
+    <div class="cell"><span class="eyebrow">מה הילד עושה</span><p>מחפש להתקבל בחבורה. מוצא מקום בהיררכיה של הקבוצה. חברויות, בריתות, התאהבויות בחברים ובמורים.</p></div>
+    <div class="cell"><span class="eyebrow">תכונות</span><p>סקרנות עצומה, רצון לדעת הכול על העולם. חברותיות, יכולת להסתדר בקבוצה של ילדים מרקעים שונים, בלי המשפחה (אבל עדיין צריך את המשפחה לתמיכה).</p></div>
+    <div class="cell good"><span class="eyebrow">מה מרוויחים אם זה מצליח</span><p>כישורים שכליים, גופניים וחברתיים, ו<b>תמונת עולם אחידה</b>. בסוף השלב הילד "התחברת": הוא גיבש דעה על העולם ועל מקומו בו, ולא יעבור עוד שינוי גדול עד גיל ההתבגרות.</p></div>
+    <div class="cell bad"><span class="eyebrow">"סגירת העין השלישית"</span><p>כשהילד מגלה שמה שהוא "יודע" באינטואיציה לא מתאים למה שהסביבה חושבת, ושצוחקים עליו, הוא <b>מדחיק</b> את זה. זה קורה בדרך כלל בגיל 7. המאמר אומר שזה יכול להשפיע גם על הראייה הפיזית: הילד עלול להפוך <b>קצר־רואי</b>.</p></div>
+  </div>
+  <div class="ex ai"><p>ילד בן 6 אומר "אני יודע שסבתא עצובה היום" בלי שמישהו אמר לו. אם עונים לו "אל תמציא, מאיפה אתה יודע?", מספיק פעמים, הוא ילמד להפסיק להקשיב לתחושה הזאת. לפי המאמר, זה מה שקורה לרוב הילדים בסביבות גיל 7.</p></div>
+</div>
+
+<!-- ============ PUBERTY / ADOLESCENCE ============ -->
+<div class="phase" id="p8">
+  <div class="phase-head"><h3>גיל ההתבגרות: שתי תחנות</h3><span class="chip gold">השלב הפאלי ושלב הלב חוזרים בגרסה בוגרת</span></div>
+  <p>מגיל 8 ועד ההתבגרות הילד רק מרחיב כישורים. בהתבגרות, הגוף והאנרגיה של שלב הלב מבשילים, ומה שנבנה בשלב הפאלי ובשלב הלב צריך <b>אישור מחדש ועדכון</b>.</p>
+  <div class="tbl"><table>
+  <thead><tr><th></th><th>התבגרות מוקדמת (Puberty)</th><th>התבגרות (Adolescence)</th></tr></thead>
+  <tbody>
+  <tr><td class="k">סימן</td><td>מתחילה בדרך כלל מוקדם יותר אצל בנות.</td><td>הופעת היכולת להוליד: וסת אצל בנות, פליטות זרע אצל בנים (הפסקה במאמר משובשת).</td></tr>
+  <tr><td class="k">המשימה</td><td>לאשר מחדש את הזהות המגדרית: "אני גבר / אני אישה".</td><td>שלב הלב חוזר, בעוצמה גדולה יותר מבילדות. איברי המין הפנימיים מבשילים.</td></tr>
+  <tr><td class="k">ממי</td><td>אישור והערצה מההורה בן אותו המין; קרבה והשוואה חיובית עם חברים מאותו מין.</td><td>אישור המיניות מההורה בן המין השני (כמו בגיל 4).</td></tr>
+  <tr><td class="k">לאן המשיכה מופנית</td><td><b>לבני אותו המין</b>: להעריץ ולהיות נערץ.</td><td>בעיקר <b>לבני המין השני</b> (אם כי, כפי שפרויד ציין, כולם שומרים יכולת למשיכה לבני אותו המין). יחסים אינטימיים עם בן/בת זוג, ואיחוד מיני כמטרה.</td></tr>
+  </tbody></table></div>
+  <div class="ex ai"><p>התבגרות מוקדמת: נער בן 13 שרוצה בעיקר שאבא יגיד "אתה גבר", ושהחברים בקבוצה יקבלו אותו. התבגרות: נער בן 16 שמתאהב בפעם הראשונה ורוצה שאמא תאהב את החברה שלו.</p></div>
+  <p>כשהזרימה של שלב הלב בריאה ובשלה, איחוד מיני יכול להוביל ל<b>תחושת התמזגות עם היקום ולפתיחה מחודשת של "העין השלישית"</b>. אבל אנשים עלולים להיבהל: כיוון שהם לא מבינים מה קורה להם, הם חוששים לשפיותם וסוגרים את זה שוב. ובכך שהם סוגרים את החוויה הרוחנית הם מגבילים גם את החוויה המינית. התמזגות כזאת קושרת את בני הזוג זה לזה ומאפשרת להם להתחייב ליחסים לכל החיים. <em>(כאן המאמר נגמר.)</em></p>
+</div>
+
+<h2 id="compare">טבלאות השוואה</h2>
+
+<h3>כל השלבים בטבלה אחת</h3>
+<div class="tbl"><table>
+<thead><tr><th>שלב</th><th>גיל</th><th>איפה בגוף</th><th>המשימה</th><th>ממי</th><th>מה הילד עושה</th><th>מה מרוויחים</th><th>אם זה נכשל</th></tr></thead>
+<tbody>
+<tr><td class="k">ברחם</td><td>עיבור–לידה</td><td>האוזן</td><td>כיוון ראשון בעולם</td><td>אמא, דרך קולה</td><td>מקשיב</td><td>מקום בעולם; רצון לתקשר; שפה</td><td>אוטיזם; קשיי דיבור</td></tr>
+<tr><td class="k">העיניים</td><td>לידה–9 חודשים</td><td>ראש, עיניים</td><td>לוודא שהקשר ממשיך</td><td>אמא, דרך עיניה</td><td>מחפש קשר עין</td><td>"אני בסדר"; ראיית עומק</td><td>חוסר ערך, בלבול, ייאוש</td></tr>
+<tr><td class="k">הפה</td><td>לידה–שנה וחצי</td><td>ראש → פה → בטן → אגן</td><td>להוריד את האנרגיה לאגן; להתחבר דרך גוף האם</td><td>אמא, במגע ובהנקה</td><td>יונק, נצמד</td><td>אופטימיות ואמון בחיים</td><td>פיצול: ראש פעיל ואגן קפוא; חוסר אונים</td></tr>
+<tr><td class="k">אנאלי</td><td>עד שנה וחצי (שיא)</td><td>פי הטבעת, שורש, רגליים</td><td>להתחבר לאדמה; להיות נפרד</td><td>אמא (האדמה, בלי לדעת)</td><td>נותן את הצואה; אומר "לא!"</td><td>כוח, עצמאות, שליטה עצמית, היגיון, "אני"</td><td>ציות עם זעם כבוש; כפייתיות; פגיעה עצמית; הרסנות</td></tr>
+<tr><td class="k">פאלי</td><td>שנה וחצי–4</td><td>עצה, גב, איבר מין חיצוני</td><td>לבנות "אני" (3) וזהות מגדר (4)</td><td>שני ההורים (גבול); ההורה בן אותו המין</td><td>מאתגר; התקף זעם; "אני רוצה!"</td><td>אסרטיביות, אומץ, גאווה, הערכה עצמית</td><td>חשדנות; נסיגה פסיבית; נקמנות</td></tr>
+<tr><td class="k">הלב</td><td>השנה החמישית</td><td>מרכזים קדמיים: אגן, בטן, לב, מצח</td><td>לחבר לב וגוף; תמונה של זוג אוהב</td><td>ההורה בן המין השני, בתמיכת השני</td><td>אוהב, מטפל; "אני בסדר?"</td><td>חום, ספונטניות, אינטואיציה</td><td>בושה; קונפליקט לא פתור</td></tr>
+<tr><td class="k">העין השלישית</td><td>6–8</td><td>המצח</td><td>תמונת עולם ומקומי בה</td><td>החברה, החברים</td><td>מחפש להתקבל בקבוצה</td><td>תמונת עולם אחידה; כישורים חברתיים</td><td>סגירה (גיל 7); קוצר ראייה</td></tr>
+</tbody></table></div>
+
+<h3>איך מרגיש "אני לא בסדר" בכל שלב</h3>
+<div class="tbl"><table>
+<thead><tr><th>שלב</th><th>התחושה</th><th>מה קורה בגוף</th></tr></thead>
+<tbody>
+<tr><td class="k">העיניים</td><td>חוסר ערך, ייאוש</td><td>ניתוק בין מה שרואים למה שמרגישים</td></tr>
+<tr><td class="k">הפה</td><td>ייאוש, חוסר אונים</td><td>פיצול ראש / אגן; חזה שקוע</td></tr>
+<tr><td class="k">אנאלי</td><td>זעם כבוש</td><td>הידוק הסוגר ושרירי הרגליים</td></tr>
+<tr><td class="k">פאלי</td><td>"באוויר", חשדנות</td><td>האנרגיה בגב לא מקבלת תגובה ולא מוארקת</td></tr>
+<tr><td class="k">הלב</td><td>בושה</td><td>סגירת המרכזים הקדמיים; התקשחות נגד ההתמזגות</td></tr>
+<tr><td class="k">העין השלישית</td><td>לעג, דחייה</td><td>הדחקה; קוצר ראייה</td></tr>
+</tbody></table></div>
+
+<h3>מה הילד "אומר" בכל שלב</h3>
+<div class="tbl"><table>
+<thead><tr><th>שלב</th><th>ההצהרה</th><th>המשמעות</th></tr></thead>
+<tbody>
+<tr><td class="k">הפה</td><td>(בלי מילים) "אני גורם לכל מה שאני צריך להופיע"</td><td>תחושת כל־יכולת מתוך סיפוק</td></tr>
+<tr><td class="k">אנאלי</td><td>"לא!" / "לא, אני לא רוצה שאת תהיי אני, אבל אל תעזבי אותי"</td><td>"כן" לכוח ולעצמאות; רגשות סותרים</td></tr>
+<tr><td class="k">פאלי מוקדם</td><td>"לא, אני לא רוצה (אותך)!"</td><td>מגדיר את עצמו דרך שלילה</td></tr>
+<tr><td class="k">פאלי (גיל 2–3)</td><td>"אני רוצה!" "אני אעשה!"</td><td>מגדיר את עצמו דרך חיוב</td></tr>
+<tr><td class="k">הלב</td><td>"הייתי רוצה שתשמחו שיש לי רגשות כאלה. אני בסדר?"</td><td>הצעה של אהבה, לא דרישה</td></tr>
+</tbody></table></div>
+
+<h2 id="body">מפת הגוף: איפה כל שלב "גר"</h2>
+<figure>
+<div class="scroll">
+<svg viewBox="0 0 760 560" role="img" aria-label="דמות אדם סכמטית עם סימון מרכז האנרגיה של כל שלב: אוזן, עיניים, פה, לב, בטן עליונה, אגן, פי הטבעת, רגליים, ומצח">
+  <g font-family="Assistant, Arial, sans-serif" font-size="13" fill="var(--fg)">
+    <g fill="none" stroke="var(--muted)" stroke-width="2.5">
+      <ellipse cx="380" cy="70" rx="38" ry="46"/>
+      <path d="M380 116 v26"/>
+      <path d="M300 160 Q380 130 460 160 L470 330 Q380 350 290 330 Z"/>
+      <path d="M300 165 L250 300 L265 305 L310 190"/>
+      <path d="M460 165 L510 300 L495 305 L450 190"/>
+      <path d="M320 335 L300 520 L330 520 L365 345"/>
+      <path d="M440 335 L460 520 L430 520 L395 345"/>
+    </g>
+    <line x1="200" y1="530" x2="560" y2="530" stroke="var(--accent)" stroke-width="3"/>
+    <text x="580" y="535" text-anchor="start" fill="var(--accent)" font-weight="700">האדמה</text>
+    <g>
+      <circle cx="380" cy="50" r="7" fill="var(--blue)"/>
+      <circle cx="366" cy="66" r="5" fill="var(--blue)"/><circle cx="394" cy="66" r="5" fill="var(--blue)"/>
+      <circle cx="417" cy="72" r="6" fill="var(--gold)"/>
+      <circle cx="380" cy="92" r="7" fill="var(--red)"/>
+      <circle cx="380" cy="205" r="9" fill="var(--gold)"/>
+      <circle cx="380" cy="250" r="7" fill="var(--gold)"/>
+      <circle cx="380" cy="300" r="8" fill="var(--red)"/>
+      <circle cx="380" cy="340" r="8" fill="var(--accent)"/>
+      <circle cx="315" cy="440" r="6" fill="var(--accent)"/><circle cx="445" cy="440" r="6" fill="var(--accent)"/>
+      <circle cx="315" cy="520" r="5" fill="var(--accent)"/><circle cx="445" cy="520" r="5" fill="var(--accent)"/>
+    </g>
+    <path d="M395 320 C 470 260, 470 200, 420 150" fill="none" stroke="var(--red)" stroke-width="3" stroke-dasharray="6 5" marker-end="url(#ah)" color="var(--red)"/>
+    <g text-anchor="start">
+      <line x1="388" y1="50" x2="520" y2="30" stroke="var(--line)"/><text x="525" y="34"><tspan font-weight="700">העין השלישית</tspan> (6–8): המצח</text>
+      <line x1="423" y1="72" x2="520" y2="70" stroke="var(--line)"/><text x="525" y="74"><tspan font-weight="700">ברחם</tspan>: האוזן</text>
+      <line x1="390" y1="205" x2="520" y2="190" stroke="var(--line)"/><text x="525" y="194"><tspan font-weight="700">הלב</tspan> (גיל 4)</text>
+      <line x1="388" y1="250" x2="520" y2="240" stroke="var(--line)"/><text x="525" y="244">בטן עליונה (הגשר בין אגן ללב)</text>
+      <line x1="470" y1="240" x2="520" y2="290" stroke="var(--line)"/><text x="525" y="294"><tspan font-weight="700">פאלי</tspan> (1.5–4): גל שעולה בגב,</text><text x="525" y="312">"מרכזי הרצון"</text>
+    </g>
+    <g text-anchor="end">
+      <line x1="360" y1="66" x2="240" y2="60" stroke="var(--line)"/><text x="235" y="64"><tspan font-weight="700">העיניים</tspan> (לידה)</text>
+      <line x1="372" y1="92" x2="240" y2="105" stroke="var(--line)"/><text x="235" y="109"><tspan font-weight="700">הפה</tspan> (לידה),</text><text x="235" y="127">ומשם למטה דרך הבטן</text>
+      <line x1="372" y1="300" x2="240" y2="300" stroke="var(--line)"/><text x="235" y="304">אגן קדמי – שלב הלב</text>
+      <text x="235" y="322">אגן אחורי (עצה) – השלב הפאלי</text>
+      <line x1="372" y1="340" x2="240" y2="370" stroke="var(--line)"/><text x="235" y="374"><tspan font-weight="700">אנאלי</tspan> (עד 1.5): פי הטבעת,</text><text x="235" y="392">בסיס עמוד השדרה</text>
+      <line x1="309" y1="440" x2="240" y2="450" stroke="var(--line)"/><text x="235" y="454">שרירי הרגליים וכפות</text><text x="235" y="472">הרגליים – החיבור לאדמה</text>
+    </g>
+  </g>
+</svg>
+</div>
+<figcaption>האנרגיה "מתיישבת" באזור אחר אזור. הכיוון הכללי: מהראש (עיניים, פה) למטה דרך הבטן עד תחתית האגן והאדמה; משם חזרה למעלה דרך הגב (פאלי), קדימה אל החזית (הלב), ועד המצח (העין השלישית).</figcaption>
+<div class="legend"><span style="--c: var(--blue)">ראש ועיניים</span><span style="--c: var(--red)">גל אינסטינקטיבי: פה, עצה, גב</span><span style="--c: var(--accent)">חיבור לאדמה: שורש, רגליים</span><span style="--c: var(--gold)">מרכזים קדמיים: לב, אוזן</span></div>
+</figure>
+
+<h2 id="treat">איך מטפלים בזה (הטיפול הפסיכו־פוסטורלי)</h2>
+<p>"פסיכו־פוסטורלי" = דרך היציבה והמבנה של הגוף. הטיפול משתמש בעיסוי כדי לשחרר את השריון שבו "נכלאה" האנרגיה של רגשות שלא הסתיימו. כשהשריון משתחרר, השלב התקוע <b>מתעורר מחדש</b>, ואז אפשר להשלים אותו, בשיחה ובמגע, בדרך שמתאימה לאותו שלב.</p>
+<div class="flow">
+  <div class="flow-row">
+    <div class="box"><b>1. לקרוא את הגוף</b>צורת השריון מספרת איזה שלב נתקע. למשל חזה שקוע = שלב הפה; רגליים מתוחות וישבן הדוק = אנאלי.</div>
+    <div class="box"><b>2. לשחרר את השריון</b>עיסוי שמפעיל את המעיים ומרוקן "לחץ" תקוע מהרקמות. בסיפור המטופל: עבודה על הבטן עד שהמעי מגיב בקולות עדינים.</div>
+    <div class="box"><b>3. השלב מתעורר</b>הכמיהה, הזיכרונות והדימויים (השד, הרחם, אבא) עולים מעצמם.</div>
+    <div class="box"><b>4. להשלים</b>לתת את התגובה שהשלב דרש: החזקה למי שתקוע בשלב הפה, גבול ברור למי שתקוע בפאלי, קבלה למי שתקוע בשלב הלב. אז הגל יכול להסתיים והאנרגיה משתחררת להמשיך.</div>
+  </div>
+</div>
+<div class="ex src"><p>רמזים מהמאמר: מי שמשלים את שלב הפה בטיפול מעדיף לשכב על הבטן. מי שחוזר לחוויית היניקה מתאר אותה כבעלת "ממד קוסמי". התנוחה המכורבלת על צד שמאל עם כריות ומגע על הפה והאף שימשה כדי לדמות את חוויית השד.</p></div>
+
+<h2 id="gaps">מה חסר במאמר, ומה המחברת עצמה מסמנת כפתוח</h2>
+<ul>
+  <li>שלבים 8 ו־9 (איחוד קו האמצע, קונדליני) לא נכתבו.</li>
+  <li>הסעיף על גיל ההתבגרות נקטע. אין תיאור של הבגרות.</li>
+  <li>הציורים X, Y, Z נזכרים אבל לא נמצאים בקובץ. גם "לוח 1" (ההתיישבות ההדרגתית בגוף) חסר.</li>
+  <li>המחברת אומרת שעוד לא השוותה את המודל שלה לתיאוריית "יחסי האובייקט" הפסיכואנליטית.</li>
+  <li>כמה טענות מוצגות במפורש כהשערה על סמך חוויה אחת: שהילד נוטש את שלב הלב בגלל הפחד לאבד את עצמו; הקשר בין סגירת העין השלישית לקוצר ראייה; "הפין הפנימי".</li>
+  <li>המאמר מערבב שפה של אנרגיה (צ'אקרות, "ים קוסמי") עם שפה פסיכולוגית. המחברת לא מציעה דרך לבדוק את הטענות על אנרגיה במחקר.</li>
+</ul>
+
+<footer>
+  <p>סיכום של: Alice Jacobus, <i>Phases of Libido Circulation Development: A Psychopostural Perspective</i> (unfinished paper, March 1995), with the prologue <i>A Systems View of the Emotional Cycle</i>. המאמר מיועד להפצה בין עמיתים ביודינמיים בלבד; הסיכום לשימוש לימודי. דוגמאות בתיבות סגולות הן של הבינה המלאכותית ולא מהמאמר.</p>
+</footer>
+</div>
+</body>
+</html>
